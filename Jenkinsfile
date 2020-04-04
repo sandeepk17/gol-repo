@@ -22,10 +22,5 @@ pipeline {
         sh 'mvn verify'
       }
     }
-    stage('Anlyse de code') {
-      steps {
-        sh 'mvn cobertura'
-      }
-    }
   }
 }
