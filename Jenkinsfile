@@ -1,15 +1,22 @@
 pipeline {
-  agent any
-  tools {
-		jdk "jdk8"
-		maven "maven3"
-	}
+  agent {
+      // Set Build Agent as Docker file 
+      dockerfile true
+  }
+  environment {
+      // Set env variables for Pipeline
+      IMAGE = readMavenPom().getArtifactId()
+      VERSION = readMavenPom().getVersion()
+      ARTIFACTORY_SERVER_ID = "Artifactory1"
+      ARTIFACTORY_URL = "http://192.168.0.114:8082/artifactory"
+      ARTIFACTORY_CREDENTIALS = "admin.jfrog"
+      CURRENT_BUILD_NO = "${currentBuild.number}"
+      RELEASE_TAG = "${currentBuild.number}-${VERSION}"
+      CURRENT_BRANCH = "${env.BRANCH_NAME}"
+      OCTOHOME = "${OCTO_HOME}"
+  }
+
   stages {
-    stage('Checkout') {
-      steps {
-        git 'https://github.com/EasyLinux/game-of-life-1.git'
-      }
-    }
     stage('Lancer les tests') {
       steps {
         sh 'mvn verify'
