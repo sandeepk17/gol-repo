@@ -48,8 +48,8 @@ pipeline {
               spec: '''{
                   "files": [
                       {
-                      "pattern": "$WORKSPACE/Octoweb.${RELEASE_TAG}.nupkg",
-                      "target": "octopus/Octoweb.${RELEASE_TAG}.nupkg"
+                      "pattern": "$WORKSPACE/OctoWeb.${RELEASE_TAG}.nupkg",
+                      "target": "octopus/OctoWeb.${RELEASE_TAG}.nupkg"
                       }
                   ]
               }''',
