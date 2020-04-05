@@ -36,12 +36,24 @@ pipeline {
         sh 'mvn clean deploy -s settings.xml'
       }
     }
+    stage ('Archive Files') {
+      steps {
+          sh 'rm -rf dist'
+          sh 'mkdir dist'
+          fileOperations([
+              fileCopyOperation(
+                  flattenFiles: true, 
+                  includes: "gameoflife-web/target/*.war", 
+                  targetLocation: "$WORKSPACE/dist") 
+          ])
+      }
+    }
     stage ('Deploy to Octopus') {
       steps {
           echo " Deploy to artifactory"
           withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
               sh 'octo help'
-              sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/gameoflife-web/target" --outFolder="$WORKSPACE"'
+              sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
           }
           rtUpload (
               serverId: "${ARTIFACTORY_SERVER_ID}",
