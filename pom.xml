@@ -26,6 +26,18 @@
         <developerConnection>scm:git:git@github.com:${github.account}/game-of-life.git</developerConnection>
         <url>scm:git:git@github.com:${github.account}/game-of-life.git</url>
     </scm>
+    <distributionManagement>
+    <repository>
+        <id>central</id>
+        <name>Artifactory-releases</name>
+        <url>http://192.168.0.104:8081/artifactory/gameoflife-snapshot</url>
+    </repository>
+    <snapshotRepository>
+        <id>snapshots</id>
+        <name>Artifactory-snapshots</name>
+        <url>http://192.168.0.104:8081/artifactory/gameoflife-snapshot</url>
+    </snapshotRepository>
+    </distributionManagement>
     <build>
         <plugins>
             <plugin>

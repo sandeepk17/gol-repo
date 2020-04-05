@@ -17,9 +17,9 @@ pipeline {
   }
 
   stages {
-    stage('Lancer les tests') {
+    stage('Build and Deploy') {
       steps {
-        sh 'mvn verify'
+        sh 'mvn deploy -s settings.xml'
       }
     }
   }
