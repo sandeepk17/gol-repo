@@ -41,7 +41,7 @@ pipeline {
           echo " Deploy to artifactory"
           withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
               sh 'octo help'
-              //sh 'octo pack --id="OctoWeb" --version="1.0.0" --basePath="$WORKSPACE/target" --outFolder="$WORKSPACE"'
+              sh 'octo pack --id="OctoWeb" --version="1.0.0" --basePath="$WORKSPACE/gameoflife-web/target/*.war" --outFolder="$WORKSPACE"'
           }
       }
     }
