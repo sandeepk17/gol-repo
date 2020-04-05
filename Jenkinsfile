@@ -8,7 +8,7 @@ pipeline {
       IMAGE = readMavenPom().getArtifactId()
       VERSION = readMavenPom().getVersion()
       ARTIFACTORY_SERVER_ID = "Artifactory1"
-      ARTIFACTORY_URL = "http://192.168.0.114:8082/artifactory"
+      ARTIFACTORY_URL = "http://192.168.0.104:8082/artifactory"
       ARTIFACTORY_CREDENTIALS = "admin.jfrog"
       CURRENT_BUILD_NO = "${currentBuild.number}"
       RELEASE_TAG = "${currentBuild.number}-${VERSION}"
@@ -41,8 +41,21 @@ pipeline {
           echo " Deploy to artifactory"
           withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
               sh 'octo help'
-              sh 'octo pack --id="OctoWeb" --version="1.0.0" --basePath="$WORKSPACE/gameoflife-web/target" --outFolder="$WORKSPACE"'
+              sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/gameoflife-web/target" --outFolder="$WORKSPACE"'
           }
+          rtUpload (
+              serverId: "${ARTIFACTORY_SERVER_ID}",
+              spec: '''{
+                  "files": [
+                      {
+                      "pattern": "$WORKSPACE/Octoweb.${RELEASE_TAG}.nupkg",
+                      "target": "octopus/Octoweb.${RELEASE_TAG}.nupkg"
+                      }
+                  ]
+              }''',
+              buildName: "${env.JOB_NAME}",
+              buildNumber: "${currentBuild.number}"
+          )
       }
     }
   }
