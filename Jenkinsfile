@@ -17,9 +17,32 @@ pipeline {
   }
 
   stages {
+    stage ('Environmental Variables') {
+      steps {
+          sh '''
+              echo "PATH = ${PATH}"
+              echo "${OCTOHOME}"
+              echo "M2_HOME = ${M2_HOME}"
+              echo "OCTO_HOME = ${OCTO_HOME}"
+          '''
+      }
+    }
     stage('Build and Deploy') {
       steps {
-        sh 'mvn deploy -s settings.xml'
+        echo "${VERSION}"
+        echo "${IMAGE}"
+        echo "${CURRENT_BRANCH}"
+        echo "$WORKSPACE"
+        sh 'mvn clean deploy -s settings.xml'
+      }
+    }
+    stage ('Deploy to Octopus') {
+      steps {
+          echo " Deploy to artifactory"
+          withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
+              sh 'octo help'
+              //sh 'octo pack --id="OctoWeb" --version="1.0.0" --basePath="$WORKSPACE/target" --outFolder="$WORKSPACE"'
+          }
       }
     }
   }
