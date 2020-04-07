@@ -14,9 +14,7 @@ pipeline {
       RELEASE_TAG = "${currentBuild.number}-${VERSION}"
       CURRENT_BRANCH = "${env.BRANCH_NAME}"
       OCTOHOME = "${OCTO_HOME}"
-      script {
-        props = readProperties file:'Build.properties';
-      }
+      props = readProperties file:'Build.properties'
   }
 
   stages {
