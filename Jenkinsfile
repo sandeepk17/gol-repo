@@ -15,7 +15,7 @@ pipeline {
       CURRENT_BRANCH = "${env.BRANCH_NAME}"
       OCTOHOME = "${OCTO_HOME}"
       script {
-        def props = readProperties file:'Build.properties';
+        props = readProperties file:'Build.properties';
       }
   }
 
