@@ -27,10 +27,11 @@ pipeline {
           '''
           script {
               def props = readProperties file:'Build.properties';
-              env['foo'] = props['user'];
+              env['user'] = props['user'];
+              env['version'] = props['version'];
           }
-          sh 'echo "foo = ${foo}"'
-          sh "echo 'props['version']'"
+          sh 'echo "user = ${user}"'
+          sh 'echo "version = ${version}"'
           //sh "echo ${props['company2']}"
           //sh "echo ${props['version']}"
       }
