@@ -27,14 +27,14 @@ pipeline {
               echo "OCTO_HOME = ${OCTO_HOME}"
           '''
           script {
-              properties = readProperties file: 'scripts/jenkins-pipelines/branch-specific.properties'
-              echo "${props.testversion}"
+              properties = readProperties file: 'Build.properties'
+              echo "${properties.testversion}"
               //env['testversion'] = props['testversion'];
               //env['company'] = props['company1'];
           }
           sh 'echo "user = ${user}"'
           sh 'echo "${testversion}"'
-          sh "echo ${env.props['company2']}"
+          //sh "echo ${env.props['company2']}"
           //sh "echo ${props['version']}"
       }
     }
@@ -42,7 +42,7 @@ pipeline {
       steps {
         echo "${VERSION}"
         echo "${IMAGE}"
-        echo "${props.company1}"
+        echo "${properties.company1}"
         echo "${CURRENT_BRANCH}"
         echo "$WORKSPACE"
         sh 'mvn clean deploy -s settings.xml'
