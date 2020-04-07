@@ -14,6 +14,9 @@ pipeline {
       RELEASE_TAG = "${currentBuild.number}-${VERSION}"
       CURRENT_BRANCH = "${env.BRANCH_NAME}"
       OCTOHOME = "${OCTO_HOME}"
+      script {
+        def props = readProperties file:'Build.properties';
+      }
   }
 
   stages {
@@ -26,7 +29,6 @@ pipeline {
               echo "OCTO_HOME = ${OCTO_HOME}"
           '''
           script {
-              def props = readProperties file:'Build.properties';
               env['user'] = props['user'];
               env['testversion'] = props['testversion'];
               env['company'] = props['company1'];
