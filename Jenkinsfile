@@ -26,14 +26,14 @@ pipeline {
               echo "M2_HOME = ${M2_HOME}"
               echo "OCTO_HOME = ${OCTO_HOME}"
           '''
-          script {
-              echo "${props.testversion}"
+          //script {
+              //echo "${props.testversion}"
               //env['testversion'] = props['testversion'];
               //env['company'] = props['company1'];
-          }
+          //}
           sh 'echo "user = ${user}"'
           sh 'echo "${testversion}"'
-          //sh "echo ${props['company2']}"
+          sh "echo ${env.props['company2']}"
           //sh "echo ${props['version']}"
       }
     }
