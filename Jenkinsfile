@@ -25,6 +25,11 @@ pipeline {
               echo "M2_HOME = ${M2_HOME}"
               echo "OCTO_HOME = ${OCTO_HOME}"
           '''
+          script {
+              def props = readProperties file:'Build.properties';
+              env['foo'] = props['user'];
+          }
+          sh 'echo "foo = ${foo}"'
       }
     }
     stage('Build and Deploy') {
