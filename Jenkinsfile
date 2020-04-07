@@ -32,7 +32,7 @@ pipeline {
           }
           sh 'echo "user = ${user}"'
           sh 'echo "${testversion}"'
-          echo "${props['company1']}"
+          echo '${props["company1"]}'
           //sh "echo ${props['company2']}"
           //sh "echo ${props['version']}"
       }
