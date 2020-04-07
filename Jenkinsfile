@@ -29,6 +29,7 @@ pipeline {
               def props = readProperties file:'Build.properties';
               env['user'] = props['user'];
               env['testversion'] = props['testversion'];
+              env['company'] = props['company1'];
           }
           sh 'echo "user = ${user}"'
           sh 'echo "${testversion}"'
@@ -39,7 +40,6 @@ pipeline {
     stage('Build and Deploy') {
       steps {
         echo "${VERSION}"
-        env['company'] = props['company1'];
         echo "${IMAGE}"
         echo "${company}"
         echo "${CURRENT_BRANCH}"
