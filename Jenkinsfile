@@ -41,7 +41,7 @@ pipeline {
       steps {
         echo "${VERSION}"
         echo "${IMAGE}"
-        echo "${company}"
+        echo "${props.company1}"
         echo "${CURRENT_BRANCH}"
         echo "$WORKSPACE"
         sh 'mvn clean deploy -s settings.xml'
