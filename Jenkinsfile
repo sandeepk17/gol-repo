@@ -14,7 +14,7 @@ pipeline {
       RELEASE_TAG = "${currentBuild.number}-${VERSION}"
       CURRENT_BRANCH = "${env.BRANCH_NAME}"
       OCTOHOME = "${OCTO_HOME}"
-      props = readProperties file:'Build.properties'
+      properties = ""
   }
 
   stages {
@@ -26,11 +26,12 @@ pipeline {
               echo "M2_HOME = ${M2_HOME}"
               echo "OCTO_HOME = ${OCTO_HOME}"
           '''
-          //script {
-              //echo "${props.testversion}"
+          script {
+              properties = readProperties file: 'scripts/jenkins-pipelines/branch-specific.properties'
+              echo "${props.testversion}"
               //env['testversion'] = props['testversion'];
               //env['company'] = props['company1'];
-          //}
+          }
           sh 'echo "user = ${user}"'
           sh 'echo "${testversion}"'
           sh "echo ${env.props['company2']}"
