@@ -27,7 +27,7 @@ pipeline {
               echo "OCTO_HOME = ${OCTO_HOME}"
           '''
           script {
-              echo "${env.props[0]}";
+              echo "${props.version}";
               //env['testversion'] = props['testversion'];
               //env['company'] = props['company1'];
           }
