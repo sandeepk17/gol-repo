@@ -32,7 +32,6 @@ pipeline {
           }
           sh 'echo "user = ${user}"'
           sh 'echo "${testversion}"'
-          echo '${props["company1"]}'
           //sh "echo ${props['company2']}"
           //sh "echo ${props['version']}"
       }
@@ -40,7 +39,9 @@ pipeline {
     stage('Build and Deploy') {
       steps {
         echo "${VERSION}"
+        env['company'] = props['company1'];
         echo "${IMAGE}"
+        echo "${company}"
         echo "${CURRENT_BRANCH}"
         echo "$WORKSPACE"
         sh 'mvn clean deploy -s settings.xml'
