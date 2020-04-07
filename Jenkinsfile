@@ -42,7 +42,11 @@ pipeline {
       steps {
         echo "${VERSION}"
         echo "${IMAGE}"
+        echo "${properties.user}"
         echo "${properties.company1}"
+        echo "${properties.company2}"
+        echo "${properties.company3}"
+        echo "${properties.testversion}"
         echo "${CURRENT_BRANCH}"
         echo "$WORKSPACE"
         sh 'mvn clean deploy -s settings.xml'
