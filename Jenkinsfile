@@ -30,7 +30,7 @@ pipeline {
               env['foo'] = props['user'];
           }
           sh 'echo "foo = ${foo}"'
-          sh "echo ${props}"
+          sh "echo 'props['version']'"
           //sh "echo ${props['company2']}"
           //sh "echo ${props['version']}"
       }
