@@ -26,13 +26,13 @@ pipeline {
               echo "OCTO_HOME = ${OCTO_HOME}"
           '''
           script {
-              def props = readProperties file:'Build.properties';
+              def env['props'] = readProperties file:'Build.properties';
               env['user'] = props['user'];
               env['testversion'] = props['testversion'];
           }
           sh 'echo "user = ${user}"'
           sh 'echo "${testversion}"'
-          //sh "echo ${props['company2']}"
+          sh "echo ${props['company2']}"
           //sh "echo ${props['version']}"
       }
     }
