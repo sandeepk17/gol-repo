@@ -15,6 +15,7 @@ pipeline {
       CURRENT_BRANCH = "${env.BRANCH_NAME}"
       OCTOHOME = "${OCTO_HOME}"
       properties = ""
+      octopusURL = "https://rasmimr.octopus.app/"
   }
 
   stages {
@@ -70,6 +71,8 @@ pipeline {
           withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
               sh 'octo help'
               sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
+              sh 'octo create-release --project "Java" --package="OctoWeb-${RELEASE_TAG}" --server ${octopusURL} --apiKey ${APIKey}'
+              sh 'octo deploy-release --project "Java" --version latest --deployto Dev --server ${octopusURL} --apiKey ${APIKey}'
           }
           rtUpload (
               serverId: "${ARTIFACTORY_SERVER_ID}",
