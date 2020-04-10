@@ -101,4 +101,21 @@ pipeline {
       }
     }
   }
+  // Cleanup Workspace
+  post { 
+      always {
+          echo 'One way or another, I have finished'
+          deleteDir()
+      }
+      success {
+          echo 'I succeeeded!'
+      }
+      failure {
+          echo 'I failed :('
+          //deleteDir()
+      }
+      changed {
+          echo 'Things were different before...'
+      }
+  }
 }
