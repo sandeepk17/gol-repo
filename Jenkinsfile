@@ -64,7 +64,7 @@ pipeline {
                   targetLocation: "$WORKSPACE/dist"), 
               fileCopyOperation(
                   flattenFiles: true, 
-                  includes: "$WORKSPACE/*.sh", 
+                  includes: "$WORKSPACE/scripts/*.sh", 
                   targetLocation: "$WORKSPACE/dist") 
           ])
       }
