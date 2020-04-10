@@ -62,7 +62,6 @@ pipeline {
                   flattenFiles: true, 
                   includes: "gameoflife-web/target/*.war", 
                   targetLocation: "$WORKSPACE/dist"), 
-          fileOperations([
               fileCopyOperation(
                   flattenFiles: true, 
                   includes: "$WORKSPACE/*.sh", 
