@@ -11,7 +11,7 @@ pipeline {
       ARTIFACTORY_URL = "http://192.168.0.101:8082/artifactory"
       ARTIFACTORY_CREDENTIALS = "admin.jfrog"
       CURRENT_BUILD_NO = "${currentBuild.number}"
-      GIT_TAG = sh(returnStdout: true, script: 'git describe --always').trim()
+      GIT_TAG = sh(returnStdout: true, script: 'git describe --tags $(git rev-list --tags)').trim()
       RELEASE_TAG = "${currentBuild.number}-${VERSION}"
       CURRENT_BRANCH = "${env.BRANCH_NAME}"
       OCTOHOME = "${OCTO_HOME}"
