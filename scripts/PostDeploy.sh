@@ -1,4 +1,7 @@
 #!/bin/bash
+echo "#######################################"
+echo "######          DEPLOY      ###########"
+echo "#######################################"
 export Tuttu_env=`get_octopusvariable "Tuttu_env"`
 export Tuttu_machine=`get_octopusvariable "Tuttu_machine"`
 export Tuttu_deployed=`get_octopusvariable "Tuttu_deployed"`
@@ -37,6 +40,6 @@ echo "##Present working directory is =================================>"
 pwd
 ls -l 
 
-InstanceName="Phoenix_#{Tuttu_machine}"
+InstanceName="Phoenix_`get_octopusvariable "Tuttu_machine"`"
 
 echo "##octopus instance name ===============================>: $InstanceName"
