@@ -4,6 +4,7 @@ export Tuttu_machine=`get_octopusvariable "Tuttu_machine"`
 export Tuttu_deployed=`get_octopusvariable "Tuttu_deployed"`
 export Tuttu_version=`get_octopusvariable "Tuttu_version"`
 echo "Tuttu Env  is---------------->: $Tuttu_env"
+echo "Tuttu Env  is---------------->: $Tuttu_machine"
 Releaseid=$(get_octopusvariable "Octopus.Release.Id")
 Tuttumachine=$(get_octopusvariable "Octopus.Tuttu_machine")
 Releaseno=$(get_octopusvariable "Octopus.Release.Number")
@@ -23,13 +24,10 @@ echo "Release Project ID is--------->: $ReleaseProjectid"
 #####################################################################
 echo "This is Post deploy test"
 # in pre-deploy, in post-deploy if custom installation directory has not been defined
-extractPath="$(get_octopusvariable "Octopus.Action.Package.CustomInstallationDirectory")"
+extractPath="$(get_octopusvariable "Octopus.Action.Package[dev package].CustomInstallationDirectory")"
 echo "This is not needed for the testscript ----------------> : $extractPath"
-# if a custom installation directory has been defined
-customPath="$(get_octopusvariable "Octopus.Action.Output.Package.InstallationDirectoryPath")"
-echo "This is not needed for the testscript ----------------> : $customPath"
 # if a custom installation directory  where the contents of the package has been extracted
-customPath="$(get_octopusvariable "Octopus.Action.Output.Package.InstallationDirectoryPath")"
+customPath="$(get_octopusvariable "Octopus.Action.Output.Package[dev package].InstallationDirectoryPath")"
 echo "This is not needed for the testscript -----------------> : $customPath"
 
 # The app we built follows "12-factor" (https://12factor.net/), and gets its 
