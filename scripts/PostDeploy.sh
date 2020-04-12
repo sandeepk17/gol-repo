@@ -1,4 +1,8 @@
 #!/bin/bash
+export Tuttu_env=`get_octopusvariable "Tuttu_env"`
+export Tuttu_machine=`get_octopusvariable "Tuttu_machine"`
+export Tuttu_deployed=`get_octopusvariable "Tuttu_deployed"`
+export Tuttu_version=`get_octopusvariable "Tuttu_version"`
 Releaseid=$(get_octopusvariable "Octopus.Release.Id")
 Releaseno=$(get_octopusvariable "Octopus.Release.Number")
 Releasecreated=$(get_octopusvariable "Octopus.Release.Created")
@@ -30,16 +34,11 @@ echo "This is not needed for the testscript -----------------> : $customPath"
 # are captured by PM2 and stored for the application (so even if the app is 
 # restarted in a different session, it uses these variables)
 
-export Tuttu_env=`get_octopusvariable "Tuttu_env"`
-export Tuttu_machine=`get_octopusvariable "Tuttu_machine"`
-export Tuttu_deployed=`get_octopusvariable "Tuttu_deployed"`
-export Tuttu_version=`get_octopusvariable "Tuttu_version"`
-
 # Change to the directory where our Node.js app was extracted
 cd `get_octopusvariable "Octopus.Action[dev package].Output.Package.InstallationDirectoryPath"`
-tuttupath= "$(get_octopusvariable "Octopus.Action[dev package].Output.Package.InstallationDirectoryPath")"
-
-echo "##octopus Tuttu Path is------------------------------>: $tuttupath"
+echo "##Present working directory is-------------------------------------------------->"
+pwd
+ls -l 
 
 # Start PM2
 # PM2 instance name: Phoenix_Tenant
