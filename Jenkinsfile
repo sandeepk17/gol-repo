@@ -95,8 +95,8 @@ pipeline {
           withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
               //sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
               //sh 'octo push --package $WORKSPACE/OctoWeb."${RELEASE_TAG}".nupkg --replace-existing --server ${octopusURL} --apiKey ${apiKey}'
-              sh 'octo create-release --project "Java" --package="OctoWeb:${RELEASE_TAG}" --server ${octopusURL} --apiKey ${APIKey}'
-              sh 'octo deploy-release --project "Java" --version latest --deployto Dev --server ${octopusURL} --apiKey ${APIKey} --waitfordeployment'
+              sh 'octo create-release --project "Tuttu" --package="OctoWeb:${RELEASE_TAG}" --server ${octopusURL} --apiKey ${APIKey}'
+              sh 'octo deploy-release --project "Tuttu" --version latest --deployto Dev --server ${octopusURL} --apiKey ${APIKey} --waitfordeployment'
           }
       }
     }
