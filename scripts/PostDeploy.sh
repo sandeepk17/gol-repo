@@ -3,20 +3,23 @@ export Tuttu_env=`get_octopusvariable "Tuttu_env"`
 export Tuttu_machine=`get_octopusvariable "Tuttu_machine"`
 export Tuttu_deployed=`get_octopusvariable "Tuttu_deployed"`
 export Tuttu_version=`get_octopusvariable "Tuttu_version"`
+echo "Tuttu Env  is---------------->: $Tuttu_env"
 Releaseid=$(get_octopusvariable "Octopus.Release.Id")
+Tuttumachine=$(get_octopusvariable "Octopus.Tuttu_machine")
 Releaseno=$(get_octopusvariable "Octopus.Release.Number")
 Releasecreated=$(get_octopusvariable "Octopus.Release.Created")
 ReleasePackage=$(get_octopusvariable "Octopus.Release.Package")
 ReleaseDeploymentid=$(get_octopusvariable "Octopus.Deployment.Id")
 ReleaseEnvName=$(get_octopusvariable "Octopus.Environment.Name")
 ReleaseProjectid=$(get_octopusvariable "Octopus.Project.Id")
-echo "Releaseid Connection string is: $Releaseid"
-echo "Release no Connection string is: $Releaseno"
-echo "Release created Connection string is: $Releasecreated"
-echo "Release package Connection string is: $ReleasePackage"
-echo "Release Deployment Connection string is: $ReleaseDeploymentid"
-echo "Release Environmental name Connection string is: $ReleaseEnvName"
-echo "Release Project ID Connection string is: $ReleaseProjectid"
+echo "Releaseid is------------------>: $Releaseid"
+echo "Tuttu Machine is-------------->: $Tuttumachine"
+echo "Release no is----------------->: $Releaseno"
+echo "Release created is------------>: $Releasecreated"
+echo "Release package is------------>: $ReleasePackage"
+echo "Release Deployment id is------>: $ReleaseDeploymentid"
+echo "Release Environmental name is->: $ReleaseEnvName"
+echo "Release Project ID is--------->: $ReleaseProjectid"
 #####################################################################
 echo "This is Post deploy test"
 # in pre-deploy, in post-deploy if custom installation directory has not been defined
