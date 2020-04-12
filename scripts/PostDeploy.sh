@@ -5,10 +5,10 @@ export Tuttu_deployed=`get_octopusvariable "Tuttu_deployed"`
 export Tuttu_version=`get_octopusvariable "Tuttu_version"`
 echo "######### Variable as Environmental VAriable ###########"
 echo "Tuttu Env  is---------------->: $Tuttu_env"
-echo "Tuttu Env  is---------------->: $Tuttu_machine"
+echo "Tuttu Machine  is---------------->: $Tuttu_machine"
 echo "############## RELEASE VARIABLES #######################"
 Releaseid=$(get_octopusvariable "Octopus.Release.Id")
-Tuttumachine=$(get_octopusvariable "Octopus.Tuttu_machine")
+Tuttumachine=$(get_octopusvariable "Tuttu_machine")
 Releaseno=$(get_octopusvariable "Octopus.Release.Number")
 Releasecreated=$(get_octopusvariable "Octopus.Release.Created")
 ReleasePackage=$(get_octopusvariable "Octopus.Release.Package")
@@ -29,7 +29,7 @@ echo "<=============This is Post deploy SCRIPT ================>"
 
 # if a custom installation directory  where the contents of the package has been extracted
 customPath="$(get_octopusvariable "Octopus.Action.Output.Package[dev package].InstallationDirectoryPath")"
-echo "This is not needed for the testscript =================>: $customPath"
+echo "This is custom path =================>: $customPath"
 
 # Change to the directory where our Node.js app was extracted
 cd `get_octopusvariable "Octopus.Action[dev package].Output.Package.InstallationDirectoryPath"`
