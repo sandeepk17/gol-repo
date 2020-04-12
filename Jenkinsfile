@@ -11,6 +11,7 @@ pipeline {
       ARTIFACTORY_URL = "http://192.168.0.101:8082/artifactory"
       ARTIFACTORY_CREDENTIALS = "admin.jfrog"
       CURRENT_BUILD_NO = "${currentBuild.number}"
+      GIT_TAG = sh(returnStdout: true, script: 'git describe --always').trim()
       RELEASE_TAG = "${currentBuild.number}-${VERSION}"
       CURRENT_BRANCH = "${env.BRANCH_NAME}"
       OCTOHOME = "${OCTO_HOME}"
@@ -26,6 +27,7 @@ pipeline {
               echo "${OCTOHOME}"
               echo "M2_HOME = ${M2_HOME}"
               echo "OCTO_HOME = ${OCTO_HOME}"
+              echo "GIT_TAG = ${GIT_TAG}"
           '''
           script {
               properties = readProperties file: 'Build.properties'
@@ -69,37 +71,43 @@ pipeline {
           ])
       }
     }
-    stage ('Deploy to Octopus') {
+    stage ('Tag and Release') {
       steps {
-          echo " Deploy to artifactory"
-          withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
-              sh 'octo help'
-              sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
-              sh 'octo push --package $WORKSPACE/OctoWeb."${RELEASE_TAG}".nupkg --replace-existing --server ${octopusURL} --apiKey ${APIKey}'
-              //sh 'octo create-release --project "Java" --package="OctoWeb:${RELEASE_TAG}" --server ${octopusURL} --apiKey ${APIKey}'
-              //sh 'octo deploy-release --project "Java" --version latest --deployto Dev --server ${octopusURL} --apiKey ${APIKey} --progress'
-          }
-          rtUpload (
-              serverId: "${ARTIFACTORY_SERVER_ID}",
-              spec: '''{
-                  "files": [
-                      {
-                      "pattern": "$WORKSPACE/OctoWeb.${RELEASE_TAG}.nupkg",
-                      "target": "octopus/OctoWeb.${RELEASE_TAG}.nupkg"
-                      }
-                  ]
-              }''',
-              buildName: "${env.JOB_NAME}",
-              buildNumber: "${currentBuild.number}"
-          )
-          withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
-              //sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
-              //sh 'octo push --package $WORKSPACE/OctoWeb."${RELEASE_TAG}".nupkg --replace-existing --server ${octopusURL} --apiKey ${apiKey}'
-              sh 'octo create-release --project "Tuttu" --package="OctoWeb:${RELEASE_TAG}" --server ${octopusURL} --apiKey ${APIKey}'
-              sh 'octo deploy-release --project "Tuttu" --version latest --deployto Dev --server ${octopusURL} --apiKey ${APIKey} --waitfordeployment'
-          }
+        sh 'git describe --tags $(git rev-list --tags)'
+
       }
     }
+    //stage ('Deploy to Octopus') {
+    //  steps {
+    //      echo " Deploy to artifactory"
+    //      withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
+    //          sh 'octo help'
+    //          sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
+    //          sh 'octo push --package $WORKSPACE/OctoWeb."${RELEASE_TAG}".nupkg --replace-existing --server ${octopusURL} --apiKey ${APIKey}'
+    //          //sh 'octo create-release --project "Java" --package="OctoWeb:${RELEASE_TAG}" --server ${octopusURL} --apiKey ${APIKey}'
+    //          //sh 'octo deploy-release --project "Java" --version latest --deployto Dev --server ${octopusURL} --apiKey ${APIKey} --progress'
+    //      }
+    //      rtUpload (
+    //          serverId: "${ARTIFACTORY_SERVER_ID}",
+    //          spec: '''{
+    //              "files": [
+    //                  {
+    //                  "pattern": "$WORKSPACE/OctoWeb.${RELEASE_TAG}.nupkg",
+    //                  "target": "octopus/OctoWeb.${RELEASE_TAG}.nupkg"
+    //                  }
+    //              ]
+    //          }''',
+    //          buildName: "${env.JOB_NAME}",
+    //          buildNumber: "${currentBuild.number}"
+    //      )
+    //      withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
+    //          //sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
+    //          //sh 'octo push --package $WORKSPACE/OctoWeb."${RELEASE_TAG}".nupkg --replace-existing --server ${octopusURL} --apiKey ${apiKey}'
+    //          sh 'octo create-release --project "Tuttu" --package="OctoWeb:${RELEASE_TAG}" --server ${octopusURL} --apiKey ${APIKey}'
+    //          sh 'octo deploy-release --project "Tuttu" --version latest --deployto Dev --server ${octopusURL} --apiKey ${APIKey} --waitfordeployment'
+    //      }
+    //  }
+    //}
   }
   // Cleanup Workspace
   post { 
