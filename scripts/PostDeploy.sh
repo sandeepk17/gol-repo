@@ -6,13 +6,13 @@ ReleasePackage=$(get_octopusvariable "Octopus.Release.Package")
 ReleaseDeploymentid=$(get_octopusvariable "Octopus.Deployment.Id")
 ReleaseEnvName=$(get_octopusvariable "Octopus.Environment.Name")
 ReleaseProjectid=$(get_octopusvariable "Octopus.Project.Id")
-echo "Connection string is: $Releaseid"
-echo "Connection string is: $Releaseno"
-echo "Connection string is: $Releasecreated"
-echo "Connection string is: $ReleasePackage"
-echo "Connection string is: $ReleaseDeploymentid"
-echo "Connection string is: $ReleaseEnvName"
-echo "Connection string is: $ReleaseProjectid"
+echo "Releaseid Connection string is: $Releaseid"
+echo "Release no Connection string is: $Releaseno"
+echo "Release created Connection string is: $Releasecreated"
+echo "Release package Connection string is: $ReleasePackage"
+echo "Release Deployment Connection string is: $ReleaseDeploymentid"
+echo "Release Environmental name Connection string is: $ReleaseEnvName"
+echo "Release Project ID Connection string is: $ReleaseProjectid"
 #####################################################################
 echo "This is Post deploy test"
 echo "This is not needed for the testscript ----> : $1"
