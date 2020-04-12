@@ -17,13 +17,13 @@ echo "Release Project ID Connection string is: $ReleaseProjectid"
 echo "This is Post deploy test"
 # in pre-deploy, in post-deploy if custom installation directory has not been defined
 extractPath="$(get_octopusvariable "Octopus.Action.Package.CustomInstallationDirectory")"
-echo "This is not needed for the testscript ----> : $extractPath"
+echo "This is not needed for the testscript ----------------> : $extractPath"
 # if a custom installation directory has been defined
 customPath="$(get_octopusvariable "Octopus.Action.Output.Package.InstallationDirectoryPath")"
-echo "This is not needed for the testscript ----> : $customPath"
+echo "This is not needed for the testscript ----------------> : $customPath"
 # if a custom installation directory  where the contents of the package has been extracted
 customPath="$(get_octopusvariable "Octopus.Action.Output.Package.InstallationDirectoryPath")"
-echo "This is not needed for the testscript ----> : $customPath"
+echo "This is not needed for the testscript -----------------> : $customPath"
 
 # The app we built follows "12-factor" (https://12factor.net/), and gets its 
 # configuration from environment variables. The variables we set in this session
@@ -37,12 +37,15 @@ export Tuttu_version=`get_octopusvariable "Tuttu_version"`
 
 # Change to the directory where our Node.js app was extracted
 cd `get_octopusvariable "Octopus.Action[dev package].Output.Package.InstallationDirectoryPath"`
+tuttupath= "$(get_octopusvariable "Octopus.Action[dev package].Output.Package.InstallationDirectoryPath")"
+
+echo "##octopus Tuttu Path is------------------------------>: $tuttupath"
 
 # Start PM2
 # PM2 instance name: Phoenix_Tenant
 InstanceName="Phoenix_#{Tuttu_env}_#{Tuttu_machine}"
 
-echo "##octopus[stderr-progress]: $InstanceName"
+echo "##octopus instance name --------------------------------------->: $InstanceName"
 #pm2 stop "$InstanceName"
 #pm2 delete "$InstanceName"
 
