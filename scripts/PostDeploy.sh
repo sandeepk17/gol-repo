@@ -37,6 +37,6 @@ echo "##Present working directory is =================================>"
 pwd
 ls -l 
 
-InstanceName="Phoenix_#{Tuttu_env}_#{Tuttu_machine}"
+InstanceName="Phoenix_#{Tuttu_machine}"
 
 echo "##octopus instance name ===============================>: $InstanceName"
