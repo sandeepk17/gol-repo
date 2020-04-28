@@ -1,6 +1,6 @@
 #!/bin/bash
-echo "#######################################"
-echo "######          DEPLOY      ###########"
+echo "#################5####################"
+echo "######          post DEPLOY      ###########"
 echo "#######################################"
 export Tuttu_env=`get_octopusvariable "Tuttu_env"`
 export Tuttu_machine=`get_octopusvariable "Tuttu_machine"`
