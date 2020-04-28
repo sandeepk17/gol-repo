@@ -52,7 +52,7 @@ pipeline {
         echo "${properties.testversion}"
         echo "${CURRENT_BRANCH}"
         echo "$WORKSPACE"
-        sh 'mvn clean deploy -s settings.xml'
+        sh 'mvn clean deploy -B -s settings.xml'
       }
     }
     stage ('Archive Files') {
@@ -68,7 +68,7 @@ pipeline {
                   flattenFiles: true, 
                   includes: "scripts/*.sh", 
                   targetLocation: "$WORKSPACE/dist"),
-               FolderCopyOperation(destinationFolderPath: '$WORKSPACE/dist', sourceFolderPath: '$WORKSPACE/gameoflife-core')                 
+               folderCopyOperation(destinationFolderPath: '$WORKSPACE/dist', sourceFolderPath: '$WORKSPACE/gameoflife-core')                 
           ])
       }
     }
