@@ -67,7 +67,8 @@ pipeline {
               fileCopyOperation(
                   flattenFiles: true, 
                   includes: "scripts/*.sh", 
-                  targetLocation: "$WORKSPACE/dist") 
+                  targetLocation: "$WORKSPACE/dist"),
+               FolderCopyOperation(destinationFolderPath: '$WORKSPACE/dist', sourceFolderPath: '$WORKSPACE/gameoflife-core')                 
           ])
       }
     }
@@ -107,7 +108,7 @@ pipeline {
   post { 
       always {
           echo 'One way or another, I have finished'
-          deleteDir()
+          //deleteDir()
       }
       success {
           echo 'I succeeeded!'
