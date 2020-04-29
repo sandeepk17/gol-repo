@@ -39,7 +39,10 @@ RUN yum install -y wget && \
     rm -f /tmp/apache-maven-3.3.9.tar.gz && \
     yum clean all
 ENV MAVEN_HOME=/opt/maven M2_HOME=/opt/maven
-ENV MAVEN_OPTS="-XX:+TieredCompilation -XX:TieredStopAtLevel=1"
+ENV MAVEN_OPTS="-XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xmx4G"
+#ENV MAVEN_OPTS="-Xms512m -Xmx512m -XX:NewSize=256m -XX:MaxNewSize=256m -XX:+TieredCompilation -XX:TieredStopAtLevel=1"
+#ENV PATH=${PATH}:${MAVEN_HOME}/bin
+#ENV MAVEN_CONFIG="$USER_HOME_DIR/.m2"
 
 # Install Oracle tools
 # RUN yum install https://download.oracle.com/otn_software/linux/instantclient/193000/oracle-instantclient19.3-basic-19.3.0.0.0-1.x86_64.rpm -y
