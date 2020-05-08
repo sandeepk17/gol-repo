@@ -119,7 +119,8 @@ pipeline {
            echo"--------failing jobs-----------" 
         }
         cleanup {
-            deleteDir()
+            echo"--------deleting repo-----------" 
+            //deleteDir()
         }
     }
 }
