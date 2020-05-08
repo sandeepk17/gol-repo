@@ -107,7 +107,7 @@ pipeline {
         }
         stage ("Parallel CI") {
             steps {
-                echo"--------Testing jobs-----------"
+                echo"--------Testing jobs---------------"
                 sleep(time:100,unit:"SECONDS")
             }
         }
