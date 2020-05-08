@@ -89,11 +89,10 @@ def checkoutSources() {
 }
 
 pipeline {
-  agent any
-  //{
+  agent{
       // Set Build Agent as Docker file 
-      //dockerfile true
-  //}
+      dockerfile true
+  }
     environment {
         PROJECT_NAME = "ngraph"
     }
