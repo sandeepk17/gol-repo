@@ -111,7 +111,7 @@ pipeline {
                 echo"--------Testing jobs---------------"
                 sh "docker build -t some-image ."
                 sh "docker push 192.168.0.102:8082/dockerslaves/some-image"
-                sleep(time:100,unit:"SECONDS")
+                //sleep(time:100,unit:"SECONDS")
             }
         }
     }
