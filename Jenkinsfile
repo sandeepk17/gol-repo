@@ -126,19 +126,19 @@ pipeline {
 		}
 	}
 
-    stage("Approval") {
-        steps {
-            timeout(time:30, unit:'MINUTES') {
-                input 'Do I have your approval to promote this image to stage?' 
-            }
-        }
-    }
-
-    stage('Cleanup') {
-      steps {
-        cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenSuccess: true, cleanWhenUnstable: true, deleteDirs: true)
-      }
-    }
+    //stage("Approval") {
+    //    steps {
+    //        timeout(time:30, unit:'MINUTES') {
+    //            input 'Do I have your approval to promote this image to stage?' 
+    //        }
+    //    }
+    //}
+//
+    //stage('Cleanup') {
+    //  steps {
+    //    cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenSuccess: true, cleanWhenUnstable: true, deleteDirs: true)
+    //  }
+    //}
   }
   // Cleanup Workspace
   post { 
