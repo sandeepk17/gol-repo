@@ -7,6 +7,8 @@ pipeline {
       // Set env variables for Pipeline
       IMAGE = readMavenPom().getArtifactId()
       VERSION = readMavenPom().getVersion()
+      appVersion = "${VERSION}-${env.BUILD_NUMBER}"
+      imageTag = "v${appVersion}"
       ARTIFACTORY_SERVER_ID = "Artifactory1"
       ARTIFACTORY_URL = "http://192.168.0.101:8082/artifactory"
       ARTIFACTORY_CREDENTIALS = "admin.jfrog"
@@ -73,34 +75,68 @@ pipeline {
       }
     }
     stage ('Deploy to Octopus') {
+        steps {
+            echo " Deploy to artifactory"
+            withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
+                sh 'octo help'
+                sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
+                sh 'octo push --package $WORKSPACE/OctoWeb."${RELEASE_TAG}".nupkg --replace-existing --server ${octopusURL} --apiKey ${APIKey}'
+                //sh 'octo create-release --project "Java" --package="OctoWeb:${RELEASE_TAG}" --server ${octopusURL} --apiKey ${APIKey}'
+                //sh 'octo deploy-release --project "Java" --version latest --deployto Dev --server ${octopusURL} --apiKey ${APIKey} --progress'
+            }
+            rtUpload (
+                serverId: "${ARTIFACTORY_SERVER_ID}",
+                spec: '''{
+                    "files": [
+                        {
+                        "pattern": "$WORKSPACE/OctoWeb.${RELEASE_TAG}.nupkg",
+                        "target": "octopus/OctoWeb.${RELEASE_TAG}.nupkg"
+                        }
+                    ]
+                }''',
+                buildName: "${env.JOB_NAME}",
+                buildNumber: "${currentBuild.number}"
+            )
+            withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
+                //sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
+                //sh 'octo push --package $WORKSPACE/OctoWeb."${RELEASE_TAG}".nupkg --replace-existing --server ${octopusURL} --apiKey ${apiKey}'
+                sh 'octo create-release --project "Tuttu" --package="OctoWeb:${RELEASE_TAG}" --server ${octopusURL} --apiKey ${APIKey}'
+                sh 'octo deploy-release --project "Tuttu" --version latest --deployto Dev --server ${octopusURL} --apiKey ${APIKey} --waitfordeployment'
+            }
+        }
+    }
+
+    stage('Verify'){
+		steps {
+			script {
+				def userInput
+				try {
+					userInput = input(
+						id: 'Proceed1', message: 'procced or not ?', parameters: [
+						[$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'test name']
+						])
+				} catch(err) { // input false
+					userInput = false
+					echo "This Job has been Aborted"
+				}
+				if (userInput != true) {
+					throw "Pull-request not confirmed"
+				}
+			}
+		}
+	}
+
+    stage("Approval") {
+        steps {
+            timeout(time:30, unit:'MINUTES') {
+                input 'Do I have your approval to promote this image to stage?' 
+            }
+        }
+    }
+
+    stage('Cleanup') {
       steps {
-          echo " Deploy to artifactory"
-          withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
-              sh 'octo help'
-              sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
-              sh 'octo push --package $WORKSPACE/OctoWeb."${RELEASE_TAG}".nupkg --replace-existing --server ${octopusURL} --apiKey ${APIKey}'
-              //sh 'octo create-release --project "Java" --package="OctoWeb:${RELEASE_TAG}" --server ${octopusURL} --apiKey ${APIKey}'
-              //sh 'octo deploy-release --project "Java" --version latest --deployto Dev --server ${octopusURL} --apiKey ${APIKey} --progress'
-          }
-          rtUpload (
-              serverId: "${ARTIFACTORY_SERVER_ID}",
-              spec: '''{
-                  "files": [
-                      {
-                      "pattern": "$WORKSPACE/OctoWeb.${RELEASE_TAG}.nupkg",
-                      "target": "octopus/OctoWeb.${RELEASE_TAG}.nupkg"
-                      }
-                  ]
-              }''',
-              buildName: "${env.JOB_NAME}",
-              buildNumber: "${currentBuild.number}"
-          )
-          withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
-              //sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
-              //sh 'octo push --package $WORKSPACE/OctoWeb."${RELEASE_TAG}".nupkg --replace-existing --server ${octopusURL} --apiKey ${apiKey}'
-              sh 'octo create-release --project "Tuttu" --package="OctoWeb:${RELEASE_TAG}" --server ${octopusURL} --apiKey ${APIKey}'
-              sh 'octo deploy-release --project "Tuttu" --version latest --deployto Dev --server ${octopusURL} --apiKey ${APIKey} --waitfordeployment'
-          }
+        cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenSuccess: true, cleanWhenUnstable: true, deleteDirs: true)
       }
     }
   }
