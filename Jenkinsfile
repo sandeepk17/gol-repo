@@ -106,25 +106,25 @@ pipeline {
         }
     }
 
-    stage('Verify'){
-		steps {
-			script {
-				def userInput
-				try {
-					userInput = input(
-						id: 'Proceed1', message: 'procced or not ?', parameters: [
-						[$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'test name']
-						])
-				} catch(err) { // input false
-					userInput = false
-					echo "This Job has been Aborted"
-				}
-				if (userInput != true) {
-					throw "Pull-request not confirmed"
-				}
-			}
-		}
-	}
+    //stage('Verify'){
+	//	steps {
+	//		script {
+	//			def userInput
+	//			try {
+	//				userInput = input(
+	//					id: 'Proceed1', message: 'procced or not ?', parameters: [
+	//					[$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'test name']
+	//					])
+	//			} catch(err) { // input false
+	//				userInput = false
+	//				echo "This Job has been Aborted"
+	//			}
+	//			if (userInput != true) {
+	//				throw "Pull-request not confirmed"
+	//			}
+	//		}
+	//	}
+	//}
 
     //stage("Approval") {
     //    steps {
