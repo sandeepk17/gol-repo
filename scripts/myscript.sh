@@ -8,4 +8,4 @@ ls -al
 echo "-------------------moved files---------------------"
 echo "######  Moved files to deployments path ###########"
 echo "................pwd....."
-pwd
+echo "................$1....."
