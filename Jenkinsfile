@@ -101,7 +101,7 @@ pipeline {
               //sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
               //sh 'octo push --package $WORKSPACE/OctoWeb."${RELEASE_TAG}".nupkg --replace-existing --server ${octopusURL} --apiKey ${apiKey}'
               sh 'octo create-release --project "Tuttu" --package="OctoWebEng:${RELEASE_TAG}" --server ${octopusURL} --apiKey ${APIKey}'
-              sh 'octo deploy-release --project "Tuttu" --version latest --deployto Dev --server ${octopusURL} --apiKey ${APIKey} --waitfordeployment'
+              sh 'octo deploy-release --project "Tuttu" --tenant= "Test1" --version latest --deployto Dev --server ${octopusURL} --apiKey ${APIKey} --waitfordeployment'
           }
       }
     }
