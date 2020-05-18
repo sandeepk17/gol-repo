@@ -77,8 +77,9 @@ pipeline {
           echo " Deploy to artifactory"
           withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
               sh 'octo help'
-              sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
-              sh 'octo push --package $WORKSPACE/OctoWeb."${RELEASE_TAG}".nupkg --replace-existing --server ${octopusURL} --apiKey ${APIKey}'
+              sh 'octo pack --id="OctoWebEng" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/distEng" --outFolder="$WORKSPACE"'
+              sh 'octo pack --id="OctoWebSwed" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/distSwed" --outFolder="$WORKSPACE"'
+              sh 'octo push --package $WORKSPACE/OctoWebEng."${RELEASE_TAG}".nupkg --replace-existing --server ${octopusURL} --apiKey ${APIKey}'
               //sh 'octo create-release --project "Java" --package="OctoWeb:${RELEASE_TAG}" --server ${octopusURL} --apiKey ${APIKey}'
               //sh 'octo deploy-release --project "Java" --version latest --deployto Dev --server ${octopusURL} --apiKey ${APIKey} --progress'
           }
@@ -87,8 +88,8 @@ pipeline {
               spec: '''{
                   "files": [
                       {
-                      "pattern": "$WORKSPACE/OctoWeb.${RELEASE_TAG}.nupkg",
-                      "target": "octopus/OctoWeb.${RELEASE_TAG}.nupkg"
+                      "pattern": "$WORKSPACE/OctoWebEng.${RELEASE_TAG}.nupkg",
+                      "target": "octopus/OctoWebEng.${RELEASE_TAG}.nupkg"
                       }
                   ]
               }''',
@@ -98,7 +99,7 @@ pipeline {
           withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
               //sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
               //sh 'octo push --package $WORKSPACE/OctoWeb."${RELEASE_TAG}".nupkg --replace-existing --server ${octopusURL} --apiKey ${apiKey}'
-              sh 'octo create-release --project "Tuttu" --package="OctoWeb:${RELEASE_TAG}" --server ${octopusURL} --apiKey ${APIKey}'
+              sh 'octo create-release --project "Tuttu" --package="OctoWebEng:${RELEASE_TAG}" --server ${octopusURL} --apiKey ${APIKey}'
               sh 'octo deploy-release --project "Tuttu" --version latest --deployto Dev --server ${octopusURL} --apiKey ${APIKey} --waitfordeployment'
           }
       }
