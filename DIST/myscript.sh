@@ -4,7 +4,7 @@ echo "######          DEPLOY      ###########"
 echo "#######################################"
 echo "-================================-"
 pwd
-filepath=$pwd
+filepath=`pwd`
 #extractPath="$(get_octopusvariable "Octopus.Action.Package.InstallationDirectoryPath")"
 echo "------------>filepath is $filepath----------"
 echo "--------------------$extractPath---------------------"
