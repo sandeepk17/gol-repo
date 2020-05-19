@@ -2,7 +2,7 @@
 echo "#######################################"
 echo "######          DEPLOY      ###########"
 echo "#######################################"
-extractPath="$(get_octopusvariable "Octopus.Action.Package[OctoWebEng].InstallationDirectoryPath")"
+extractPath="$(get_octopusvariable "Octopus.Action.Package.InstallationDirectoryPath")"
 echo "--------------------$extractPath---------------------"
 ls -al
 echo "-------------------moved files---------------------"
