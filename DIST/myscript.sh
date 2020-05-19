@@ -4,7 +4,9 @@ echo "######          DEPLOY      ###########"
 echo "#######################################"
 echo "-================================-"
 pwd
+filepath = `pwd`
 extractPath="$(get_octopusvariable "Octopus.Action.Package.InstallationDirectoryPath")"
+echo $pwd
 echo "--------------------$extractPath---------------------"
 ls -al
 echo "-------------------moved files---------------------"
