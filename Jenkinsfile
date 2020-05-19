@@ -77,7 +77,7 @@ pipeline {
           echo " Deploy to artifactory"
           withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
               sh 'octo help'
-              sh 'octo pack --id="OctoWebEng" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/distEng" --outFolder="$WORKSPACE"'
+              sh 'octo pack --id="OctoWebEng" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/DIST" --outFolder="$WORKSPACE"'
               sh 'octo pack --id="OctoWebSwed" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/distSwed" --outFolder="$WORKSPACE"'
               sh 'octo push --package $WORKSPACE/OctoWebEng."${RELEASE_TAG}".nupkg --replace-existing --server ${octopusURL} --apiKey ${APIKey}'
               sh 'octo push --package $WORKSPACE/OctoWebSwed."${RELEASE_TAG}".nupkg --replace-existing --server ${octopusURL} --apiKey ${APIKey}'
