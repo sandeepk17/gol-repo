@@ -32,7 +32,6 @@ if [[ ${env##*-} == "c1" ]];then
     cd $jboss_ctrl/$env/deployments
     echo "---------pwd--- contains deployment------"
     ls -al
-    sleep 1m
 elif [[ ${env##*-} == "c2" ]];then
     echo "UK Environment"
     echo "clean up deployments"
@@ -46,7 +45,6 @@ elif [[ ${env##*-} == "c2" ]];then
     echo "---------pwd--- contains deployment------"
     pwd
     ls -al
-    sleep 1m
 else
     echo "No environments are avilable for deployment"
 fi
