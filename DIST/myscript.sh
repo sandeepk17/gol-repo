@@ -97,7 +97,3 @@ elif [[ ${Octopus_env} == "Test" ]] && [[ ${env##*-} == "c2" ]];then
 else
     echo "No environments are avilable for deployment"
 fi
-echo "starting Jboss"
-cd $jboss_ctrl/$env
-echo "jboss drive to stop jboss"
-pwd
