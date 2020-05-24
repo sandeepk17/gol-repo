@@ -105,7 +105,7 @@ pipeline {
           }
       }
     }
-    stage('') {
+    stage('promote') {
         steps {
             echo "PROMOTE RELEASE"
             withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
