@@ -17,9 +17,11 @@ if [[ ${Octopus_env} == "Dev" ]];then
     cd $jboss_ctrl/salescore-udv2-c1
     echo "jboss drive to stop jboss"
     rm -rf $jboss_ctrl/salescore-udv2-c1/deployments/*
+    cd $extractPath/
+    echo "moving deployment file DK env "
     mv distDK/*.* /$jboss_ctrl/salescore-udv2-c1/deployments
     cd $extractPath/salescore-udv2-c1
-    echo "moving configurations and files "
+    echo "moving configurations and files of dk"
     mv configuration/*.* /$jboss_ctrl/salescore-udv2-c1/configuration
     mv props/*.* /$jboss_ctrl/salescore-udv2-c1/props
     mv cert/*.* /$jboss_ctrl/salescore-udv2-c1/cert
@@ -29,9 +31,11 @@ if [[ ${Octopus_env} == "Dev" ]];then
     cd $jboss_ctrl/salescore-udv2-c2
     echo "jboss drive to stop jboss"
     rm -rf $jboss_ctrl/salescore-udv2-c2/deployments/*
+    cd $extractPath/
+    echo "moving deployment files of UK env"
     mv distDK/*.* /$jboss_ctrl/salescore-udv2-c2/deployments
     cd $extractPath/salescore-udv2-c2
-    echo "moving configurations and files "
+    echo "moving configurations and files of uk"
     mv configuration/*.* /$jboss_ctrl/salescore-udv2-c2/configuration
     mv props/*.* /$jboss_ctrl/salescore-udv2-c2/props
     mv cert/*.* /$jboss_ctrl/salescore-udv2-c2/cert
@@ -42,7 +46,7 @@ elif [[ ${Octopus_env} == "Test" ]] && [[ ${env##*-} == "c1" ]];then
     echo "jboss drive to stop jboss"
     cd $extractPath/$env
     pwd
-    echo "moving configurations and files "
+    echo "moving configurations and files of DK"
     mv configuration/*.* /$jboss_ctrl/$env/configuration
     mv props/*.* /$jboss_ctrl/$env/props
     mv cert/*.* /$jboss_ctrl/$env/cert
@@ -67,7 +71,7 @@ elif [[ ${Octopus_env} == "Test" ]] && [[ ${env##*-} == "c2" ]];then
     echo "jboss drive to stop jboss"
     cd $extractPath/$env
     pwd
-    echo "moving configurations and files "
+    echo "moving configurations and files of UK "
     mv configuration/*.* /$jboss_ctrl/$env/configuration
     mv props/*.* /$jboss_ctrl/$env/props
     mv cert/*.* /$jboss_ctrl/$env/cert
