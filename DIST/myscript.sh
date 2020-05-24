@@ -41,8 +41,9 @@ if [[ ${Octopus_env} == "Dev" ]];then
     mv cert/*.* /$jboss_ctrl/salescore-udv2-c2/cert
     cd $jboss_ctrl/salescore-udv2-c2
     echo "start jboss"
-elif [[ ${Octopus_env} == "Test" && ${env##*-} == "c1" ]];then
-    echo "TESTING ENVIRONMENT-----"
+elif [[ $Octopus_env == "Test" ]] && [[ ${env##*-} == "c1" ]];then
+    echo "-************************$Octopus_env"
+    echo "TESTING ENVIRONMENT-----$Octopus_env"
     cd $jboss_ctrl/$env
     echo "jboss drive to stop jboss"
     cd $extractPath/$env
