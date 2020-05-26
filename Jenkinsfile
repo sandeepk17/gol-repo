@@ -149,11 +149,11 @@ pipeline {
                 build_res = build job: "badgetest", wait: true
                 if (build_res.result != "SUCCESS")
                 {
-                    color = "red"
+                    color = "green"
                 }
                 else
                 {
-                    color = "green"
+                    color = "red"
                 }
                 currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
                 buildno = "" + build_res.number
