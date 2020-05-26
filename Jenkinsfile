@@ -131,7 +131,7 @@ pipeline {
                 }
                 currentBuild.description = "<b>Version:</b> ${build_res}<br/>"
                 currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>"
-                currentBuild.description = '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
+                currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
                 buildno = "" + build_res.number
             }
             //withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
@@ -155,7 +155,7 @@ pipeline {
                 {
                     color = "green"
                 }
-                currentBuild.description = '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
+                currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
                 buildno = "" + build_res.number
             }
             //withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
