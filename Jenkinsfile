@@ -129,8 +129,10 @@ pipeline {
                 {
                     color = "green"
                 }
-                currentBuild.description = '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
-                buildno = "" + build_res.number
+                currentBuild.description += "<b>Version:</b> ${env.BRANCH_NAME}<br/>"
+                currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>"
+                //currentBuild.description = '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
+                //buildno = "" + build_res.number
             }
             //withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
             //    //sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
