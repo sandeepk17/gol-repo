@@ -33,6 +33,7 @@ echo "salescore_language is :#{salescore_language}"
 echo "tuttu_env is :#{tuttu_env}"
 echo "tuttu machine is :#{tuttu_machine}"
 echo "tuttu env is :#{tuttu_env}"
+echo "environment test library is :#{env_test_lib}"
 if [[ ${Octopus_env} == "Dev" ]];then
 echo "DK Environment"
 elif [[$Octopus_env == "Test" ]] && [[ ${env##*-} == "DK" ]];then
