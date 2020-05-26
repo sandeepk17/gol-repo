@@ -8,7 +8,7 @@ pipeline {
       IMAGE = readMavenPom().getArtifactId()
       VERSION = readMavenPom().getVersion()
       ARTIFACTORY_SERVER_ID = "Artifactory1"
-      ARTIFACTORY_URL = "http://192.168.0.101:8082/artifactory"
+      ARTIFACTORY_URL = "http://192.168.0.100:8082/artifactory"
       ARTIFACTORY_CREDENTIALS = "admin.jfrog"
       CURRENT_BUILD_NO = "${currentBuild.number}"
       GIT_TAG = sh(returnStdout: true, script: 'git describe --tags $(git rev-list --tags --max-count=1)').trim()
@@ -52,7 +52,7 @@ pipeline {
         echo "${properties.testversion}"
         echo "${CURRENT_BRANCH}"
         echo "$WORKSPACE"
-        sh 'mvn -T 100 clean deploy -B -s settings.xml'
+        //sh 'mvn -T 100 clean deploy -B -s settings.xml'
       }
     }
     stage ('Archive Files') {
@@ -104,6 +104,16 @@ pipeline {
               sh 'octo deploy-release --project "Tuttu" --tenant="Test1" --version latest --deployto Dev --server ${octopusURL} --apiKey ${APIKey} --waitfordeployment'
           }
       }
+    }
+    stage('promote') {
+        steps {
+            echo "PROMOTE RELEASE"
+            //withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
+            //    //sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
+            //    //sh 'octo push --package $WORKSPACE/OctoWeb."${RELEASE_TAG}".nupkg --replace-existing --server ${octopusURL} --apiKey ${apiKey}'
+            //    sh 'octo promote-release --project "Tuttu" --tenant="Test1" --from Dev --to Test --server ${octopusURL} --apiKey ${APIKey} --waitfordeployment'
+            //}
+        }
     }
   }
   // Cleanup Workspace
