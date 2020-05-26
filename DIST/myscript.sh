@@ -17,6 +17,19 @@ deployment_id=$(get_octopusvariable "Octopus.Deployment.Id")
 deployment_name=$(get_octopusvariable "Octopus.Deployment.Name")
 release_id=$(get_octopusvariable "Octopus.Release.Id")
 release_number=$(get_octopusvariable "Octopus.Release.Number")
+echo "deployer is :$deployer"
+echo "deployment_date :$deployment_date"
+echo "deployment_id is :$deployment_id"
+echo "deployment_name is :$deployment_name"
+echo "release_id is :$release_id"
+echo "release number is :$release_number"
+if [[ ${Octopus_env} == "Dev" ]];then
+echo "DK Environment"
+elif [[$Octopus_env == "Test" ]] && [[ ${env##*-} == "DK" ]];then
+echo "Test Environment DK environment"
+elif [[ $Octopus_env == "Test" ]] && [[ ${env##*-} == "UK" ]];then
+echo "Test Environment UK environment"
+fi
 
 #if [[ ${Octopus_env} == "Dev" ]];then
 #    echo "DK Environment"
