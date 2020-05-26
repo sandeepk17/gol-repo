@@ -118,7 +118,20 @@ pipeline {
     stage('triggerdowstream') {
         steps {
             echo "PROMOTE RELEASE"
-            build job: "gof-pipeline", wait: true
+            build_res = build job: "gof-pipeline", wait: true
+            script{
+                def buildno = null
+                if (build_res.result != "SUCCESS")
+                {
+                    color = "red"
+                }
+                else
+                {
+                    color = "green"
+                }
+                currentBuild.description = '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
+                buildno = "" + build_res.number
+            }
             //withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
             //    //sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
             //    //sh 'octo push --package $WORKSPACE/OctoWeb."${RELEASE_TAG}".nupkg --replace-existing --server ${octopusURL} --apiKey ${apiKey}'
