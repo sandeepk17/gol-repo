@@ -115,6 +115,17 @@ pipeline {
             //}
         }
     }
+    stage('triggerdowstream') {
+        steps {
+            echo "PROMOTE RELEASE"
+            build job: "gof-pipeline", wait: true
+            //withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
+            //    //sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
+            //    //sh 'octo push --package $WORKSPACE/OctoWeb."${RELEASE_TAG}".nupkg --replace-existing --server ${octopusURL} --apiKey ${apiKey}'
+            //    sh 'octo promote-release --project "Tuttu" --tenant="Test1" --from Dev --to Test --server ${octopusURL} --apiKey ${APIKey} --waitfordeployment'
+            //}
+        }
+    }
   }
   // Cleanup Workspace
   post { 
