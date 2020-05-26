@@ -118,9 +118,9 @@ pipeline {
     stage('triggerdowstream') {
         steps {
             echo "PROMOTE RELEASE"
-            build_res = build job: "gof-pipeline", wait: true
             script{
                 def buildno = null
+                build_res = build job: "gof-pipeline", wait: true
                 if (build_res.result != "SUCCESS")
                 {
                     color = "red"
