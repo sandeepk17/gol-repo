@@ -155,8 +155,10 @@ pipeline {
                 {
                     color = "red"
                 }
-                currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
-                buildno = "" + build_res.number
+                currentBuild.description += <a href='http://localhost:8080/job/gof-pipeline/'><img src='http://localhost:8080/job/gof-pipeline/badge/icon'></a> + "\n"
+                
+                //currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
+                //buildno = "" + build_res.number
             }
             //withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
             //    //sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
