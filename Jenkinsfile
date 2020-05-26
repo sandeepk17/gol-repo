@@ -129,8 +129,8 @@ pipeline {
                 {
                     color = "green"
                 }
-                currentBuild.description += "<b>Version:</b> ${env.BRANCH_NAME}<br/>"
-                currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>"
+                currentBuild.description = "<b>Version:</b> ${build_res}<br/>"
+                //currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>"
                 //currentBuild.description = '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
                 //buildno = "" + build_res.number
             }
