@@ -17,6 +17,8 @@ deployment_id=$(get_octopusvariable "Octopus.Deployment.Id")
 deployment_name=$(get_octopusvariable "Octopus.Deployment.Name")
 release_id=$(get_octopusvariable "Octopus.Release.Id")
 release_number=$(get_octopusvariable "Octopus.Release.Number")
+tuttu_number=$(get_octopusvariable "tuttu_version")
+tuttu_env=$(get_octopusvariable "env_name")
 echo "deployer is :$deployer"
 echo "deployment_date :$deployment_date"
 echo "deployment_id is :$deployment_id"
@@ -26,10 +28,12 @@ echo "DevEnvPackage is :$DevEnvPackage"
 echo "env is :$env"
 echo "env_name is :$env_name"
 echo "jboss is :$jboss"
+echo "jboss is :#{jboss}"
 echo "salescore_language is :$salescore_language"
 echo "tuttu_env is :$tuttu_env"
 echo "tuttu machine is :$tuttu_machine"
-echo "tuttu version is :$tuttu_version"
+echo "tuttu version is :$tuttu_number"
+echo "tuttu env is :$tuttu_env"
 if [[ ${Octopus_env} == "Dev" ]];then
 echo "DK Environment"
 elif [[$Octopus_env == "Test" ]] && [[ ${env##*-} == "DK" ]];then
