@@ -32,7 +32,6 @@ echo "jboss is :#{jboss}"
 echo "salescore_language is :#{salescore_language}"
 echo "tuttu_env is :#{tuttu_env}"
 echo "tuttu machine is :#{tuttu_machine}"
-echo "tuttu version is :#{tuttu_number}"
 echo "tuttu env is :#{tuttu_env}"
 if [[ ${Octopus_env} == "Dev" ]];then
 echo "DK Environment"
