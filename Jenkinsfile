@@ -38,7 +38,7 @@ def notifyByEmail(def gitPrInfo) {
     }
 }
 
-def branchBuildBadge = addEmbeddableBadgeConfiguration(id: "branchBuildBadge")
+def branchBuildBadge = addEmbeddableBadgeConfiguration(id: "branchBuildBadge",subject: "Integrationtest")
 
 pipeline {
   agent {
@@ -100,7 +100,7 @@ pipeline {
     stage ('Archive Files') {
       steps {
           script {
-                    branchBuildBadge.setSubject('Master branch')
+                    branchBuildBadge.setStatus('running')
                     try {
                         sh 'rm -rf dist'
                         sh 'mkdir dist'
@@ -120,7 +120,7 @@ pipeline {
                         branchBuildBadge.setStatus('failing')
                         error 'Build failed'
                     }
-                    currentBuild.description = "<a href='http://192.168.0.100:8080/job/Game-of-life-pipeline/'><img src='http://192.168.0.100:8080/job/Game-of-life-pipeline/badge/icon?status=branchBuildBadge'></a>" + "\n"
+                    currentBuild.description = "<a href='http://192.168.0.100:8080/job/Game-of-life-pipeline/'><img src='http://192.168.0.100:8080/job/Game-of-life-pipeline/badge/icon?config=branchBuildBadge'></a>" + "\n"
                 }
 
       }
