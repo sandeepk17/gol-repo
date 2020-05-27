@@ -39,6 +39,8 @@ def notifyByEmail(def gitPrInfo) {
 }
 
 def branchBuildBadge = addEmbeddableBadgeConfiguration(id: "branchBuildBadge")
+def branchBuildBadge2 = addEmbeddableBadgeConfiguration(id: "branchBuildBadge2")
+def branchBuildBadge1 = addEmbeddableBadgeConfiguration(id: "branchBuildBadge1")
 
 pipeline {
   agent {
@@ -186,6 +188,7 @@ pipeline {
                     error 'Build failed'
                 }
                 //currentBuild.description += "<b>Version:</b> ${build_res}<br/>"
+                currentBuild.description += "<b>Build Status:</b>http://192.168.0.100:8080/job/badgetest/badge/icon?config=branchBuildBadge1<br/>"
                 currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>"
                 currentBuild.description += "<a href='http://192.168.0.100:8080/job/badgetest/'><img src='http://192.168.0.100:8080/job/badgetest/badge/icon?config=branchBuildBadge1'></a>" + "\n"
                 //currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
@@ -202,7 +205,6 @@ pipeline {
         steps {
             echo "PROMOTE RELEASE"
             script{
-                def branchBuildBadge2 = addEmbeddableBadgeConfiguration(id: "branchBuildBadge2")
                 branchBuildBadge2.setSubject('Regressiontest')
                 branchBuildBadge2.setStatus('running')
                 try {
