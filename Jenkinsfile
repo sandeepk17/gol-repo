@@ -156,6 +156,59 @@ pipeline {
             //}
         }
     }
+    stage('triggerdowstream') {
+        steps {
+            echo "PROMOTE RELEASE"
+            script{
+                def buildno = null
+                build_res = build job: "gof-pipeline", wait: true
+                if (build_res.result != "SUCCESS")
+                {
+                    color = "red"
+                }
+                else
+                {
+                    color = "green"
+                }
+                currentBuild.description = "<b>Version:</b> ${build_res}<br/>"
+                currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>"
+                currentBuild.description += "<a href='http://192.168.0.100:8080/job/badgetest/'><img src='http://192.168.0.100:8080/job/badgetest/badge/icon'></a>" + "\n"
+                //currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
+                //buildno = "" + build_res.number
+            }
+            //withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
+            //    //sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
+            //    //sh 'octo push --package $WORKSPACE/OctoWeb."${RELEASE_TAG}".nupkg --replace-existing --server ${octopusURL} --apiKey ${apiKey}'
+            //    sh 'octo promote-release --project "Tuttu" --tenant="Test1" --from Dev --to Test --server ${octopusURL} --apiKey ${APIKey} --waitfordeployment'
+            //}
+        }
+    }
+    stage('triggerdowstream1') {
+        steps {
+            echo "PROMOTE RELEASE"
+            script{
+                def buildno = null
+                build_res = build job: "badgetest", wait: true
+                if (build_res.result != "SUCCESS")
+                {
+                    color = "green"
+                }
+                else
+                {
+                    color = "red"
+                }
+                currentBuild.description += "<a href='http://192.168.0.100:8080/job/gof-pipeline/'><img src='http://192.168.0.100:8080/job/gof-pipeline/badge/icon?status=win32build'></a>" + "\n"
+                
+                //currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
+                //buildno = "" + build_res.number
+            }
+            //withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
+            //    //sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
+            //    //sh 'octo push --package $WORKSPACE/OctoWeb."${RELEASE_TAG}".nupkg --replace-existing --server ${octopusURL} --apiKey ${apiKey}'
+            //    sh 'octo promote-release --project "Tuttu" --tenant="Test1" --from Dev --to Test --server ${octopusURL} --apiKey ${APIKey} --waitfordeployment'
+            //}
+        }
+    }
   }
   // Cleanup Workspace
   post { 
