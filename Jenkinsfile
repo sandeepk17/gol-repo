@@ -176,7 +176,6 @@ pipeline {
         steps {
             echo "PROMOTE RELEASE"
             script{
-                def branchBuildBadge1 = addEmbeddableBadgeConfiguration(id: "branchBuildBadge1")
                 branchBuildBadge1.setSubject('Smoketest')
                 branchBuildBadge1.setStatus('running')
                 try {
