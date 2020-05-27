@@ -104,8 +104,8 @@ pipeline {
     stage ('Archive Files') {
       steps {
           script {
-                    badgebuild.setSubject('Integration Test')
-                    badgebuild.setStatus('running')
+                    branchBuildBadge.setSubject('Integration Test')
+                    branchBuildBadge.setStatus('running')
                     try {
                         sh 'rm -rf dist'
                         sh 'mkdir dist'
@@ -120,13 +120,13 @@ pipeline {
                                 targetLocation: "$WORKSPACE/dist"),
                            folderCopyOperation(destinationFolderPath: "$WORKSPACE/dist", sourceFolderPath: "$WORKSPACE/gameoflife-core")                 
                         ])
-                        badgebuild.setStatus('passing')
+                        branchBuildBadge.setStatus('passing')
                     } catch (Exception err) {
-                        badgebuild.setStatus('failing')
-                        badgebuild.setColor('pink')
+                        branchBuildBadge.setStatus('failing')
+                        branchBuildBadge.setColor('blue')
                         error 'Build failed'
                     }
-                    currentBuild.description = "<a href='http://192.168.0.100:8080/job/Game-of-life-pipeline/'><img src='http://192.168.0.100:8080/job/Game-of-life-pipeline/badge/icon?config=branchBuildBadge'></a>" + "\n"
+                    currentBuild.description = "<a href='http://192.168.0.100:8080/job/Game-of-life-pipeline/'><img src='http://192.168.0.100:8080/job/Game-of-life-pipeline/badge/icon?config=branchBuildBadge'></a>"
                 }
 
       }
