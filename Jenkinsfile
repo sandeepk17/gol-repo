@@ -188,8 +188,6 @@ pipeline {
                     branchBuildBadge.setColor('pink')
                     error 'Build failed'
                 }
-                Badge.setStatus("$BADLINES")
-                Badge.setColor('blue')
                 //currentBuild.description += "<b>Version:</b> ${build_res}<br/>"
                 currentBuild.description += "<a href='http://192.168.0.100:8080/job/gof-pipeline/'><img src='http://192.168.0.100:8080/job/gof-pipeline/badge/icon?config=branchBuildBadge'></a>" + "\n"
                 currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>" + "\n"
