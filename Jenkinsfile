@@ -115,7 +115,7 @@ pipeline {
                                 includes: "gameoflife-web/target/*.war", 
                                 targetLocation: "$WORKSPACE/dist"), 
                             fileCopyOperation(
-                                flattenFiles: true, 
+                                flattenFiles: true 
                                 includes: "scripts/*.sh", 
                                 targetLocation: "$WORKSPACE/dist"),
                            folderCopyOperation(destinationFolderPath: "$WORKSPACE/dist", sourceFolderPath: "$WORKSPACE/gameoflife-core")                 
