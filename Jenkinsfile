@@ -187,7 +187,7 @@ pipeline {
                     error 'Build failed'
                 }
                 //currentBuild.description += "<b>Version:</b> ${build_res}<br/>"
-                currentBuild.description += "<a href='http://localhost:8080/job/gof-pipeline/'><img src='http://localhost:8080/job/gof-pipeline/badge/icon?config=smoketest'></a>" + "\n"
+                currentBuild.description += "<a href='http://192.168.0.100:8080/job/gof-pipeline/'><img src='http://192.168.0.100:8080/job/gof-pipeline/badge/icon?config=smoketest'></a>" + "\n"
                 currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>" + "\n"
                 //currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
                 //buildno = "" + build_res.number
@@ -213,7 +213,7 @@ pipeline {
                     inttst.setColor('pink')
                     error 'Build failed'
                 }
-                currentBuild.description += "<a href='http://192.168.0.100:8080/job/badgetest/'><img src='http://192.168.0.100:8080/job/badgetest/badge/icon?config=integrationtest'></a>" + "\n"                
+                currentBuild.description += "<a href='http://192.168.0.100:8080/job/badgetest/'><img src='http://192.168.0.100:8080/job/badgetest/badge/icon'></a>" + "\n"                
                 //currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
                 //buildno = "" + build_res.number
             }
