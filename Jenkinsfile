@@ -38,8 +38,6 @@ def notifyByEmail(def gitPrInfo) {
     }
 }
 
-def branchBuildBadge = addEmbeddableBadgeConfiguration(id: "branchBuildBadge")
-
 pipeline {
   agent {
       // Set Build Agent as Docker file 
@@ -51,6 +49,9 @@ pipeline {
       VERSION = readMavenPom().getVersion()
       ARTIFACTORY_SERVER_ID = "Artifactory1"
       ARTIFACTORY_URL = "http://192.168.0.100:8082/artifactory"
+      branchBuildBadge = addEmbeddableBadgeConfiguration(id: "branchBuildBadge")
+      branchBuild = addEmbeddableBadgeConfiguration(id: "branchBuildBadge")
+      badgebuild = addEmbeddableBadgeConfiguration(id: "branchBuildBadge")
       ARTIFACTORY_CREDENTIALS = "admin.jfrog"
       CURRENT_BUILD_NO = "${currentBuild.number}"
       GIT_TAG = sh(returnStdout: true, script: 'git describe --tags $(git rev-list --tags --max-count=1)').trim()
@@ -100,8 +101,8 @@ pipeline {
     stage ('Archive Files') {
       steps {
           script {
-                    branchBuildBadge.setSubject('Integration Test')
-                    branchBuildBadge.setStatus('running')
+                    badgebuild.setSubject('Integration Test')
+                    badgebuild.setStatus('running')
                     try {
                         sh 'rm -rf dist'
                         sh 'mkdir dist'
@@ -116,10 +117,10 @@ pipeline {
                                 targetLocation: "$WORKSPACE/dist"),
                            folderCopyOperation(destinationFolderPath: "$WORKSPACE/dist", sourceFolderPath: "$WORKSPACE/gameoflife-core")                 
                         ])
-                        branchBuildBadge.setStatus('passing')
+                        badgebuild.setStatus('passing')
                     } catch (Exception err) {
-                        branchBuildBadge.setStatus('failing')
-                        branchBuildBadge.setColor('pink')
+                        badgebuild.setStatus('failing')
+                        badgebuild.setColor('pink')
                         error 'Build failed'
                     }
                     currentBuild.description = "<a href='http://192.168.0.100:8080/job/Game-of-life-pipeline/'><img src='http://192.168.0.100:8080/job/Game-of-life-pipeline/badge/icon?config=branchBuildBadge'></a>" + "\n"
@@ -201,14 +202,14 @@ pipeline {
         steps {
             echo "PROMOTE RELEASE"
             script{
-                branchBuildBadge.setSubject('Regressiontest')
-                branchBuildBadge.setStatus('running')
+                branchBuild.setSubject('Regressiontest')
+                branchBuild.setStatus('running')
                 try {
-                    build_res = build job: "badgetest", wait: true
-                    branchBuildBadge.setStatus('passing')
+                    build job: "badgetest", wait: true
+                    branchBuild.setStatus('passing')
                 } catch (Exception err) {
-                    branchBuildBadge.setStatus('failing')
-                    branchBuildBadge.setColor('pink')
+                    branchBuild.setStatus('failing')
+                    branchBuild.setColor('pink')
                     error 'Build failed'
                 }
                 currentBuild.description += "<a href='http://192.168.0.100:8080/job/badgetest/'><img src='http://192.168.0.100:8080/job/badgetest/badge/icon?config=branchBuildBadge'></a>" + "\n"                
