@@ -109,7 +109,6 @@ pipeline {
                     try {
                         sh 'rm -rf dist'
                         sh 'mkdir dist'
-                        echo "${CURRENT_BRANCH1}"
                         fileOperations([
                             fileCopyOperation(
                                 flattenFiles: true, 
@@ -119,7 +118,7 @@ pipeline {
                                 flattenFiles: true, 
                                 includes: "scripts/*.sh", 
                                 targetLocation: "$WORKSPACE/dist"),
-                           folderCopyOperation(destinationFolderPath: "$WORKSPACE/dist", sourceFolderPath: "$WORKSPACE/gameoflife-core")                 
+                           folderCopyOperation(destinationFolderPath: "$WORKSPACE/testtt", sourceFolderPath: "$WORKSPACE/gameoflife-core")                 
                         ])
                         branchBuildBadge.setStatus('passing')
                         branchBuildBadge.setColor('blue')
