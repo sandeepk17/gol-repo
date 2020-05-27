@@ -1,3 +1,8 @@
+
+
+def branchBuildBadge = addEmbeddableBadgeConfiguration(id: "branchBuildBadge")
+def branchBuild = addEmbeddableBadgeConfiguration(id: "branchBuildBadge")
+def badgebuild = addEmbeddableBadgeConfiguration(id: "branchBuildBadge")
 @NonCPS
 
 def killPreviousRunningJobs() {
