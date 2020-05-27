@@ -182,9 +182,9 @@ pipeline {
                 branchBuildBadge.setStatus('running')
                 try {
                     build job: "gof-pipeline", wait: true
-                    branchBuildBadge.setStatus('passing')
-                } catch (Exception err) {
                     branchBuildBadge.setStatus('failing')
+                } catch (Exception err) {
+                    branchBuildBadge.setStatus('passing')
                     branchBuildBadge.setColor('pink')
                     error 'Build failed'
                 }
