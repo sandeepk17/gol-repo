@@ -3,6 +3,7 @@
 def branchBuildBadge = addEmbeddableBadgeConfiguration(id: "branchBuildBadge")
 def branchBuild = addEmbeddableBadgeConfiguration(id: "branchBuildBadge")
 def badgebuild = addEmbeddableBadgeConfiguration(id: "branchBuildBadge")
+
 @NonCPS
 
 def killPreviousRunningJobs() {
@@ -187,6 +188,8 @@ pipeline {
                     branchBuildBadge.setColor('pink')
                     error 'Build failed'
                 }
+                Badge.setStatus("$BADLINES")
+                Badge.setColor('blue')
                 //currentBuild.description += "<b>Version:</b> ${build_res}<br/>"
                 currentBuild.description += "<a href='http://192.168.0.100:8080/job/gof-pipeline/'><img src='http://192.168.0.100:8080/job/gof-pipeline/badge/icon?config=branchBuildBadge'></a>" + "\n"
                 currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>" + "\n"
@@ -204,17 +207,17 @@ pipeline {
         steps {
             echo "PROMOTE RELEASE"
             script{
-                branchBuild.setSubject('Regressiontest')
-                branchBuild.setStatus('running')
+                def triggerbadge = addEmbeddableBadgeConfiguration(id: "flake8", subject: "Style errors")
                 try {
-                    build job: "badgetest", wait: true
-                    branchBuild.setStatus('passing')
+                    build_res = build job: "badgetest", wait: true
+                    echo "........${build_res.result}..."
+                    triggerbadge.setStatus("${build_res.result}")
                 } catch (Exception err) {
-                    branchBuild.setStatus('failing')
-                    branchBuild.setColor('pink')
+                    triggerbadge.setStatus("${build_res.result}")
+                    triggerbadge.setColor('pink')
                     error 'Build failed'
                 }
-                currentBuild.description += "<a href='http://192.168.0.100:8080/job/badgetest/'><img src='http://192.168.0.100:8080/job/badgetest/badge/icon?config=branchBuildBadge'></a>" + "\n"                
+                currentBuild.description += "<a href='http://192.168.0.100:8080/job/badgetest/'><img src='http://192.168.0.100:8080/job/badgetest/badge/icon?config=flake8'></a>" + "\n"                
                 //currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
                 //buildno = "" + build_res.number
             }
