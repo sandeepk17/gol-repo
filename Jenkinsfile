@@ -177,23 +177,23 @@ pipeline {
     stage('triggerdowstream') {
         steps {
             echo "PROMOTE RELEASE"
-            script{
-                branchBuildBadge.setSubject('Smoketest')
-                branchBuildBadge.setStatus('running')
-                try {
-                    build job: "gof-pipeline", wait: true
-                    branchBuildBadge.setStatus('failing')
-                } catch (Exception err) {
-                    branchBuildBadge.setStatus('passing')
-                    branchBuildBadge.setColor('pink')
-                    error 'Build failed'
-                }
-                //currentBuild.description += "<b>Version:</b> ${build_res}<br/>"
-                currentBuild.description += "<a href='http://192.168.0.100:8080/job/gof-pipeline/'><img src='http://192.168.0.100:8080/job/gof-pipeline/badge/icon?config=branchBuildBadge'></a>" + "\n"
-                currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>" + "\n"
-                //currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
-                //buildno = "" + build_res.number
-            }
+            //script{
+            //    branchBuildBadge.setSubject('Smoketest')
+            //    branchBuildBadge.setStatus('running')
+            //    try {
+            //        build job: "gof-pipeline", wait: true
+            //        branchBuildBadge.setStatus('failing')
+            //    } catch (Exception err) {
+            //        branchBuildBadge.setStatus('passing')
+            //        branchBuildBadge.setColor('pink')
+            //        error 'Build failed'
+            //    }
+            //    //currentBuild.description += "<b>Version:</b> ${build_res}<br/>"
+            //    currentBuild.description += "<a href='http://192.168.0.100:8080/job/gof-pipeline/'><img src='http://192.168.0.100:8080/job/gof-pipeline/badge/icon?config=branchBuildBadge'></a>" + "\n"
+            //    currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>" + "\n"
+            //    //currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
+            //    //buildno = "" + build_res.number
+            //}
             //withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
             //    //sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
             //    //sh 'octo push --package $WORKSPACE/OctoWeb."${RELEASE_TAG}".nupkg --replace-existing --server ${octopusURL} --apiKey ${apiKey}'
