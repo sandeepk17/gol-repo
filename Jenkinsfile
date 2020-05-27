@@ -206,6 +206,7 @@ pipeline {
             echo "PROMOTE RELEASE"
             script{
                 def triggerbadge = addEmbeddableBadgeConfiguration(id: "flake8", subject: "Style errors")
+                triggerbadge.setStatus('running')
                 try {
                     build_res = build job: "badgetest", wait: true
                     echo "........${build_res.result}..."
@@ -215,7 +216,7 @@ pipeline {
                     triggerbadge.setColor('pink')
                     error 'Build failed'
                 }
-                currentBuild.description += "<a href='http://192.168.0.100:8080/job/badgetest/badge/icon?config=flake8'></a>" + "\n"                
+                currentBuild.description += "<a href='http://192.168.0.100:8080/job/badgetest/'><img src='http://192.168.0.100:8080/job/badgetest/badge/icon?config=flake8'></a>" + "\n"                
                 //currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
                 //buildno = "" + build_res.number
             }
