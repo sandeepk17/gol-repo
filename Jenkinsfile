@@ -120,7 +120,7 @@ pipeline {
                         branchBuildBadge.setStatus('failing')
                         error 'Build failed'
                     }
-                    currentBuild.description += "<a href='http://192.168.0.100:8080/job/Game-of-life-pipeline/'><img src='http://192.168.0.100:8080/job/Game-of-life-pipeline/badge/icon?status=branchBuildBadge'></a>" + "\n"
+                    currentBuild.description = "<a href='http://192.168.0.100:8080/job/Game-of-life-pipeline/'><img src='http://192.168.0.100:8080/job/Game-of-life-pipeline/badge/icon?status=branchBuildBadge'></a>" + "\n"
                 }
 
       }
