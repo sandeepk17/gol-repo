@@ -118,6 +118,7 @@ pipeline {
                         branchBuildBadge.setStatus('passing')
                     } catch (Exception err) {
                         branchBuildBadge.setStatus('failing')
+                        branchBuildBadge.setColor('pink')
                         error 'Build failed'
                     }
                     currentBuild.description = "<a href='http://192.168.0.100:8080/job/Game-of-life-pipeline/'><img src='http://192.168.0.100:8080/job/Game-of-life-pipeline/badge/icon?config=branchBuildBadge'></a>" + "\n"
