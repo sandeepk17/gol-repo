@@ -38,7 +38,7 @@ def notifyByEmail(def gitPrInfo) {
     }
 }
 
-build_badge = addEmbeddableBadgeConfiguration(id: 'build', subject: 'Build')
+def branchBuildBadge = addEmbeddableBadgeConfiguration(id: "branchBuildBadge")
 
 pipeline {
   agent {
@@ -100,7 +100,7 @@ pipeline {
     stage ('Archive Files') {
       steps {
           script {
-                    build_badge.setStatus('building')
+                    branchBuildBadge.setSubject('Master branch')
                     try {
                         sh 'rm -rf dist'
                         sh 'mkdir dist'
@@ -115,12 +115,12 @@ pipeline {
                                 targetLocation: "$WORKSPACE/dist"),
                            folderCopyOperation(destinationFolderPath: "$WORKSPACE/dist", sourceFolderPath: "$WORKSPACE/gameoflife-core")                 
                         ])
-                        build_badge.setStatus('passing')
+                        branchBuildBadge.setStatus('passing')
                     } catch (Exception err) {
-                        build_badge.setStatus('failing')
+                        branchBuildBadge.setStatus('failing')
                         error 'Build failed'
                     }
-                    currentBuild.description += "<a href='http://192.168.0.100:8080/job/Game-of-life-pipeline/'><img src='http://192.168.0.100:8080/job/Game-of-life-pipeline/badge/icon?status=win32build'></a>" + "\n"
+                    currentBuild.description += "<a href='http://192.168.0.100:8080/job/Game-of-life-pipeline/'><img src='http://192.168.0.100:8080/job/Game-of-life-pipeline/badge/icon?status=branchBuildBadge'></a>" + "\n"
                 }
 
       }
