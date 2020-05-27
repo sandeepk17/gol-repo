@@ -118,7 +118,7 @@ pipeline {
                                 flattenFiles: true, 
                                 includes: "scripts/*.sh", 
                                 targetLocation: "$WORKSPACE/dist"),
-                           folderCopyOperation(destinationFolderPath: "$WORKSPACE/testtt", sourceFolderPath: "$WORKSPACE/gameoflife-core")                 
+                           folderCopyOperation(destinationFolderPath: "$WORKSPACE/dist", sourceFolderPath: "$WORKSPACE/gameoflife-core")                 
                         ])
                         branchBuildBadge.setStatus('passing')
                         branchBuildBadge.setColor('blue')
