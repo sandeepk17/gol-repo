@@ -39,8 +39,6 @@ def notifyByEmail(def gitPrInfo) {
 }
 
 def branchBuildBadge = addEmbeddableBadgeConfiguration(id: "branchBuildBadge")
-def inttst = addEmbeddableBadgeConfiguration(id: "integrationtest")
-def smktst = addEmbeddableBadgeConfiguration(id: "smoketest")
 
 pipeline {
   agent {
@@ -176,18 +174,18 @@ pipeline {
         steps {
             echo "PROMOTE RELEASE"
             script{
-                smktst.setSubject('Smoketest')
-                smktst.setStatus('running')
+                branchBuildBadge.setSubject('Smoketest')
+                branchBuildBadge.setStatus('running')
                 try {
                     build job: "gof-pipeline", wait: true
-                    smktst.setStatus('passing')
+                    branchBuildBadge.setStatus('passing')
                 } catch (Exception err) {
-                    smktst.setStatus('failing')
-                    smktst.setColor('pink')
+                    branchBuildBadge.setStatus('failing')
+                    branchBuildBadge.setColor('pink')
                     error 'Build failed'
                 }
                 //currentBuild.description += "<b>Version:</b> ${build_res}<br/>"
-                currentBuild.description += "<a href='http://192.168.0.100:8080/job/gof-pipeline/'><img src='http://192.168.0.100:8080/job/gof-pipeline/badge/icon?config=smoketest'></a>" + "\n"
+                currentBuild.description += "<a href='http://192.168.0.100:8080/job/gof-pipeline/'><img src='http://192.168.0.100:8080/job/gof-pipeline/badge/icon?config=branchBuildBadge'></a>" + "\n"
                 currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>" + "\n"
                 //currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
                 //buildno = "" + build_res.number
@@ -203,17 +201,17 @@ pipeline {
         steps {
             echo "PROMOTE RELEASE"
             script{
-                inttst.setSubject('Regressiontest')
-                inttst.setStatus('running')
+                branchBuildBadge.setSubject('Regressiontest')
+                branchBuildBadge.setStatus('running')
                 try {
                     build_res = build job: "badgetest", wait: true
-                    inttst.setStatus('passing')
+                    branchBuildBadge.setStatus('passing')
                 } catch (Exception err) {
-                    inttst.setStatus('failing')
-                    inttst.setColor('pink')
+                    branchBuildBadge.setStatus('failing')
+                    branchBuildBadge.setColor('pink')
                     error 'Build failed'
                 }
-                currentBuild.description += "<a href='http://192.168.0.100:8080/job/badgetest/'><img src='http://192.168.0.100:8080/job/badgetest/badge/icon'></a>" + "\n"                
+                currentBuild.description += "<a href='http://192.168.0.100:8080/job/badgetest/'><img src='http://192.168.0.100:8080/job/badgetest/badge/icon?config=branchBuildBadge'></a>" + "\n"                
                 //currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
                 //buildno = "" + build_res.number
             }
