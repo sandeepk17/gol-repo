@@ -39,8 +39,8 @@ def notifyByEmail(def gitPrInfo) {
 }
 
 def branchBuildBadge = addEmbeddableBadgeConfiguration(id: "branchBuildBadge")
-def branchBuildBadge2 = addEmbeddableBadgeConfiguration(id: "branchBuildBadge2")
-def branchBuildBadge1 = addEmbeddableBadgeConfiguration(id: "branchBuildBadge1")
+def inttst = addEmbeddableBadgeConfiguration(id: "integrationtest")
+def smktst = addEmbeddableBadgeConfiguration(id: "smoketest")
 
 pipeline {
   agent {
@@ -176,20 +176,19 @@ pipeline {
         steps {
             echo "PROMOTE RELEASE"
             script{
-                branchBuildBadge1.setSubject('Smoketest')
-                branchBuildBadge1.setStatus('running')
+                smktst.setSubject('Smoketest')
+                smktst.setStatus('running')
                 try {
                     build job: "gof-pipeline", wait: true
-                    branchBuildBadge1.setStatus('passing')
+                    smktst.setStatus('passing')
                 } catch (Exception err) {
-                    branchBuildBadge1.setStatus('failing')
-                    branchBuildBadge1.setColor('pink')
+                    smktst.setStatus('failing')
+                    smktst.setColor('pink')
                     error 'Build failed'
                 }
                 //currentBuild.description += "<b>Version:</b> ${build_res}<br/>"
-                currentBuild.description += "<a href='http://192.168.0.100:8080/job/badgetest/badge/icon?config=branchBuildBadge1'></a>" + "\n"
+                currentBuild.description += "<a href='http://192.168.0.100:8080/job/gof-pipeline/badge/icon?config=smoketest'></a>" + "\n"
                 currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>" + "\n"
-                currentBuild.description += "<a href='http://192.168.0.100:8080/job/gof-pipeline/'><img src='http://192.168.0.100:8080/job/gof-pipeline/badge/icon?config=branchBuildBadge1'></a>" + "\n"
                 //currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
                 //buildno = "" + build_res.number
             }
@@ -204,17 +203,17 @@ pipeline {
         steps {
             echo "PROMOTE RELEASE"
             script{
-                branchBuildBadge2.setSubject('Regressiontest')
-                branchBuildBadge2.setStatus('running')
+                inttst.setSubject('Regressiontest')
+                inttst.setStatus('running')
                 try {
                     build_res = build job: "badgetest", wait: true
-                    branchBuildBadge2.setStatus('passing')
+                    inttst.setStatus('passing')
                 } catch (Exception err) {
-                    branchBuildBadge2.setStatus('failing')
-                    branchBuildBadge2.setColor('pink')
+                    inttst.setStatus('failing')
+                    inttst.setColor('pink')
                     error 'Build failed'
                 }
-                currentBuild.description += "<a href='http://192.168.0.100:8080/job/badgetest/'><img src='http://192.168.0.100:8080/job/badgetest/badge/icon?branchBuildBadge2'></a>" + "\n"                
+                currentBuild.description += "<a href='http://192.168.0.100:8080/job/badgetest/'><img src='http://192.168.0.100:8080/job/badgetest/badge/icon?integrationtest'></a>" + "\n"                
                 //currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
                 //buildno = "" + build_res.number
             }
