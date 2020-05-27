@@ -1,3 +1,43 @@
+@NonCPS
+
+def killPreviousRunningJobs() {
+    def jobname = env.JOB_NAME
+    def buildnum = env.BUILD_NUMBER.toInteger()
+
+    def job = Jenkins.instance.getItemByFullName(jobname)
+    for (build in job.builds) {
+        if (!build.isBuilding()){
+            continue;
+        }
+        if (buildnum == build.getNumber().toInteger()){
+            continue;
+        }
+        echo "Kill task = ${build}"
+        build.doStop();
+    }
+}
+
+def notifyByEmail(def gitPrInfo) {
+    stage('Notify') {
+        String notifyPeople = "${gitPrInfo.prAuthorEmail}, ${gitPrInfo.commitAuthorEmail}"
+        emailext (
+            subject: "nGraph-Onnx CI: PR ${CHANGE_ID} ${currentBuild.result}!",
+            body: """
+                <table style="width:100%">
+                    <tr><td>Status:</td> <td>${currentBuild.result}</td></tr>
+                    <tr><td>Pull Request Title:</td> <td>${CHANGE_TITLE}</td></tr>
+                    <tr><td>Pull Request:</td> <td><a href=${CHANGE_URL}>${CHANGE_ID}</a> </td></tr>
+                    <tr><td>Branch:</td> <td>${CHANGE_BRANCH}</td></tr>
+                    <tr><td>Commit Hash:</td> <td>${gitPrInfo.commitHash}</td></tr>
+                    <tr><td>Commit Subject:</td> <td>${gitPrInfo.commitSubject}</td></tr>
+                    <tr><td>Jenkins Build:</td> <td> <a href=${RUN_DISPLAY_URL}> ${BUILD_NUMBER} </a> </td></tr>
+                </table>
+            """,
+            to: "${notifyPeople}"
+        )
+    }
+}
+
 pipeline {
   agent {
       // Set Build Agent as Docker file 
@@ -70,6 +110,7 @@ pipeline {
                   targetLocation: "$WORKSPACE/dist"),
              folderCopyOperation(destinationFolderPath: "$WORKSPACE/dist", sourceFolderPath: "$WORKSPACE/gameoflife-core")                 
           ])
+          addEmbeddableBadgeConfiguration(id:"test", subject: "subject", status: "pass", color: "red", animatedOverlayColor: "pink", link: "http://www.google.com")
       }
     }
     stage ('Deploy to Octopus') {
