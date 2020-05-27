@@ -109,13 +109,14 @@ pipeline {
                     try {
                         sh 'rm -rf dist'
                         sh 'mkdir dist'
+                        echo "${CURRENT_BRANCH1}"
                         fileOperations([
                             fileCopyOperation(
                                 flattenFiles: true, 
                                 includes: "gameoflife-web/target/*.war", 
                                 targetLocation: "$WORKSPACE/dist"), 
                             fileCopyOperation(
-                                flattenFiles: true 
+                                flattenFiles: true, 
                                 includes: "scripts/*.sh", 
                                 targetLocation: "$WORKSPACE/dist"),
                            folderCopyOperation(destinationFolderPath: "$WORKSPACE/dist", sourceFolderPath: "$WORKSPACE/gameoflife-core")                 
