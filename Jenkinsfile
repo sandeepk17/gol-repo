@@ -121,9 +121,10 @@ pipeline {
                            folderCopyOperation(destinationFolderPath: "$WORKSPACE/dist", sourceFolderPath: "$WORKSPACE/gameoflife-core")                 
                         ])
                         branchBuildBadge.setStatus('passing')
+                        branchBuildBadge.setColor('blue')
                     } catch (Exception err) {
                         branchBuildBadge.setStatus('failing')
-                        branchBuildBadge.setColor('blue')
+                        branchBuildBadge.setColor('red')
                         error 'Build failed'
                     }
                     currentBuild.description = "<a href='http://192.168.0.100:8080/job/Game-of-life-pipeline/'><img src='http://192.168.0.100:8080/job/Game-of-life-pipeline/badge/icon?config=branchBuildBadge'></a>"
