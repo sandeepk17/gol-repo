@@ -38,6 +38,8 @@ def notifyByEmail(def gitPrInfo) {
     }
 }
 
+build_badge = addEmbeddableBadgeConfiguration(id: 'build', subject: 'Build')
+
 pipeline {
   agent {
       // Set Build Agent as Docker file 
@@ -97,22 +99,29 @@ pipeline {
     }
     stage ('Archive Files') {
       steps {
-          sh 'rm -rf dist'
-          sh 'mkdir dist'
-          fileOperations([
-              fileCopyOperation(
-                  flattenFiles: true, 
-                  includes: "gameoflife-web/target/*.war", 
-                  targetLocation: "$WORKSPACE/dist"), 
-              fileCopyOperation(
-                  flattenFiles: true, 
-                  includes: "scripts/*.sh", 
-                  targetLocation: "$WORKSPACE/dist"),
-             folderCopyOperation(destinationFolderPath: "$WORKSPACE/dist", sourceFolderPath: "$WORKSPACE/gameoflife-core")                 
-          ])
           script {
-            currentBuild.description = addEmbeddableBadgeConfiguration(id:"test", subject: "subject", status: "pass", color: "red", animatedOverlayColor: "pink", link: "http://www.google.com")
-          }
+                    build_badge.setStatus('building')
+                    try {
+                        sh 'rm -rf dist'
+                        sh 'mkdir dist'
+                        fileOperations([
+                            fileCopyOperation(
+                                flattenFiles: true, 
+                                includes: "gameoflife-web/target/*.war", 
+                                targetLocation: "$WORKSPACE/dist"), 
+                            fileCopyOperation(
+                                flattenFiles: true, 
+                                includes: "scripts/*.sh", 
+                                targetLocation: "$WORKSPACE/dist"),
+                           folderCopyOperation(destinationFolderPath: "$WORKSPACE/dist", sourceFolderPath: "$WORKSPACE/gameoflife-core")                 
+                        ])
+                        build_badge.setStatus('passing')
+                    } catch (Exception err) {
+                        build_badge.setStatus('failing')
+                        error 'Build failed'
+                    }
+                }
+
       }
     }
     stage ('Deploy to Octopus') {
