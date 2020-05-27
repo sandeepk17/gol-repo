@@ -110,7 +110,9 @@ pipeline {
                   targetLocation: "$WORKSPACE/dist"),
              folderCopyOperation(destinationFolderPath: "$WORKSPACE/dist", sourceFolderPath: "$WORKSPACE/gameoflife-core")                 
           ])
-          addEmbeddableBadgeConfiguration(id:"test", subject: "subject", status: "pass", color: "red", animatedOverlayColor: "pink", link: "http://www.google.com")
+          script {
+            currentBuild.description = addEmbeddableBadgeConfiguration(id:"test", subject: "subject", status: "pass", color: "red", animatedOverlayColor: "pink", link: "http://www.google.com")
+          }
       }
     }
     stage ('Deploy to Octopus') {
@@ -170,7 +172,7 @@ pipeline {
                 {
                     color = "green"
                 }
-                currentBuild.description = "<b>Version:</b> ${build_res}<br/>"
+                currentBuild.description += "<b>Version:</b> ${build_res}<br/>"
                 currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>"
                 currentBuild.description += "<a href='http://192.168.0.100:8080/job/badgetest/'><img src='http://192.168.0.100:8080/job/badgetest/badge/icon'></a>" + "\n"
                 //currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
