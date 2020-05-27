@@ -174,19 +174,20 @@ pipeline {
         steps {
             echo "PROMOTE RELEASE"
             script{
-                branchBuildBadge.setSubject('Smoketest')
-                branchBuildBadge.setStatus('running')
+                def branchBuildBadge1 = addEmbeddableBadgeConfiguration(id: "branchBuildBadge1")
+                branchBuildBadge1.setSubject('Smoketest')
+                branchBuildBadge1.setStatus('running')
                 try {
                     build job: "gof-pipeline", wait: true
-                    branchBuildBadge.setStatus('passing')
+                    branchBuildBadge1.setStatus('passing')
                 } catch (Exception err) {
-                    branchBuildBadge.setStatus('failing')
-                    branchBuildBadge.setColor('pink')
+                    branchBuildBadge1.setStatus('failing')
+                    branchBuildBadge1.setColor('pink')
                     error 'Build failed'
                 }
                 //currentBuild.description += "<b>Version:</b> ${build_res}<br/>"
                 currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>"
-                currentBuild.description += "<a href='http://192.168.0.100:8080/job/badgetest/'><img src='http://192.168.0.100:8080/job/badgetest/badge/icon?config=branchBuildBadge'></a>" + "\n"
+                currentBuild.description += "<a href='http://192.168.0.100:8080/job/badgetest/'><img src='http://192.168.0.100:8080/job/badgetest/badge/icon?config=branchBuildBadge1'></a>" + "\n"
                 //currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
                 //buildno = "" + build_res.number
             }
@@ -201,17 +202,18 @@ pipeline {
         steps {
             echo "PROMOTE RELEASE"
             script{
-                branchBuildBadge.setSubject('Regressiontest')
-                branchBuildBadge.setStatus('running')
+                def branchBuildBadge2 = addEmbeddableBadgeConfiguration(id: "branchBuildBadge2")
+                branchBuildBadge2.setSubject('Regressiontest')
+                branchBuildBadge2.setStatus('running')
                 try {
                     build_res = build job: "badgetest", wait: true
-                    branchBuildBadge.setStatus('passing')
+                    branchBuildBadge2.setStatus('passing')
                 } catch (Exception err) {
-                    branchBuildBadge.setStatus('failing')
-                    branchBuildBadge.setColor('pink')
+                    branchBuildBadge2.setStatus('failing')
+                    branchBuildBadge2.setColor('pink')
                     error 'Build failed'
                 }
-                currentBuild.description += "<a href='http://192.168.0.100:8080/job/gof-pipeline/'><img src='http://192.168.0.100:8080/job/gof-pipeline/badge/icon?config=branchBuildBadge'></a>" + "\n"
+                currentBuild.description += "<a href='http://192.168.0.100:8080/job/gof-pipeline/'><img src='http://192.168.0.100:8080/job/gof-pipeline/badge/icon?config=branchBuildBadge2'></a>" + "\n"
                 
                 //currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
                 //buildno = "" + build_res.number
