@@ -120,6 +120,7 @@ pipeline {
                         build_badge.setStatus('failing')
                         error 'Build failed'
                     }
+                    currentBuild.description += "<a href='http://192.168.0.100:8080/job/Game-of-life-pipeline/'><img src='http://192.168.0.100:8080/job/Game-of-life-pipeline/badge/icon?status=win32build'></a>" + "\n"
                 }
 
       }
@@ -183,7 +184,6 @@ pipeline {
                 }
                 currentBuild.description += "<b>Version:</b> ${build_res}<br/>"
                 currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>"
-                currentBuild.description += "<a href='http://192.168.0.100:8080/job/badgetest/'><img src='http://192.168.0.100:8080/job/badgetest/badge/icon?config=build'></a>" + "\n"
                 currentBuild.description += "<a href='http://192.168.0.100:8080/job/badgetest/'><img src='http://192.168.0.100:8080/job/badgetest/badge/icon'></a>" + "\n"
                 //currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
                 //buildno = "" + build_res.number
@@ -209,7 +209,7 @@ pipeline {
                 {
                     color = "red"
                 }
-                currentBuild.description += "<a href='http://192.168.0.100:8080/job/gof-pipeline/'><img src='http://192.168.0.100:8080/job/gof-pipeline/badge/icon?status=win32build'></a>" + "\n"
+                currentBuild.description += "<a href='http://192.168.0.100:8080/job/gof-pipeline/'><img src='http://192.168.0.100:8080/job/gof-pipeline/badge/icon'></a>" + "\n"
                 
                 //currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
                 //buildno = "" + build_res.number
