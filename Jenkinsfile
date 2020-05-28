@@ -166,15 +166,14 @@ pipeline {
                 build_res = build job: "gof-pipeline", wait: true
                 if (build_res.result != "SUCCESS")
                 {
-                    color = "red"
+                    color = "green"
                 }
                 else
                 {
-                    color = "green"
+                    color = "red"
                 }
                 currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>"
-                currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">${env.JOB_NAME}#'+ build_res.displayName + '</a><br>' + "\n"
-                buildno = "" + build_res.number
+                currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">${env.JOB_NAME}#'+ build_res.displayName + '</a><br>' + buildno = "" + build_res.number
             }
             //withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
             //    //sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
