@@ -114,8 +114,6 @@ pipeline {
           ])
           script{currentBuild.description = "<b>Version:</b> ${VERSION}<br/>"}
           script {
-            manager.addShortText("Some text")
-            manager.addShortText("\ntext")
             manager.addShortText("same line", "black", "lightgreen", "0px", "white")
          }
       }
