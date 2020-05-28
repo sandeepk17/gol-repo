@@ -166,11 +166,11 @@ pipeline {
                 build_res = build job: "gof-pipeline", wait: true
                 if (build_res.result != "SUCCESS")
                 {
-                    color = "green"
+                    color = "red"
                 }
                 else
                 {
-                    color = "red"
+                    color = "green"
                 }
                 currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>"
                 currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">${env.JOB_NAME}#'+ build_res.displayName + '">${No}#' + build_res.number + '</a><br>' + "\n" 
@@ -190,11 +190,11 @@ pipeline {
                 build_res = build job: "badgetest", wait: true
                 if (build_res.result != "SUCCESS")
                 {
-                    color = "green"
+                    color = "red"
                 }
                 else
                 {
-                    color = "red"
+                    color = "green"
                 }
                 
                 //currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
