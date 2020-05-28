@@ -112,11 +112,12 @@ pipeline {
                   targetLocation: "$WORKSPACE/dist"),
              folderCopyOperation(destinationFolderPath: "$WORKSPACE/dist", sourceFolderPath: "$WORKSPACE/gameoflife-core")                 
           ])
-          script{
-                manager.addShortText("Some text")
-                manager.addShortText("\ntext")
-                manager.addShortText("same line", "black", "lightgreen", "0px", "white", "${VERSION}")
-          }
+          script{currentBuild.description = "<b>Version:</b> ${VERSION}<br/>"}
+          script {
+            manager.addShortText("Some text")
+            manager.addShortText("\ntext")
+            manager.addShortText("same line", "black", "lightgreen", "0px", "white")
+         }
       }
     }
     stage ('Deploy to Octopus') {
