@@ -1,9 +1,3 @@
-
-
-def branchBuildBadge = addEmbeddableBadgeConfiguration(id: "branchBuildBadge")
-def branchBuild = addEmbeddableBadgeConfiguration(id: "branchBuildBadge")
-def badgebuild = addEmbeddableBadgeConfiguration(id: "badgebuild")
-
 @NonCPS
 
 def killPreviousRunningJobs() {
@@ -43,6 +37,8 @@ def notifyByEmail(def gitPrInfo) {
         )
     }
 }
+
+build_badge = addEmbeddableBadgeConfiguration(id: 'build', subject: 'Build')
 
 pipeline {
   agent {
@@ -103,33 +99,20 @@ pipeline {
     }
     stage ('Archive Files') {
       steps {
-          script {
-                    branchBuildBadge.setSubject('Integration Test')
-                    branchBuildBadge.setStatus('running')
-                    try {
-                        sh 'rm -rf dist'
-                        sh 'mkdir dist'
-                        fileOperations([
-                            fileCopyOperation(
-                                flattenFiles: true, 
-                                includes: "gameoflife-web/target/*.war", 
-                                targetLocation: "$WORKSPACE/dist"), 
-                            fileCopyOperation(
-                                flattenFiles: true, 
-                                includes: "scripts/*.sh", 
-                                targetLocation: "$WORKSPACE/dist"),
-                           folderCopyOperation(destinationFolderPath: "$WORKSPACE/dist", sourceFolderPath: "$WORKSPACE/gameoflife-core")                 
-                        ])
-                        branchBuildBadge.setStatus('passing')
-                        branchBuildBadge.setColor('blue')
-                    } catch (Exception err) {
-                        branchBuildBadge.setStatus('failing')
-                        branchBuildBadge.setColor('red')
-                        error 'Build failed'
-                    }
-                    currentBuild.description = "<a href='http://192.168.0.100:8080/job/Game-of-life-pipeline/'><img src='http://192.168.0.100:8080/job/Game-of-life-pipeline/badge/icon?config=branchBuildBadge'></a>"
-                }
-
+          sh 'rm -rf dist'
+          sh 'mkdir dist'
+          fileOperations([
+              fileCopyOperation(
+                  flattenFiles: true, 
+                  includes: "gameoflife-web/target/*.war", 
+                  targetLocation: "$WORKSPACE/dist"), 
+              fileCopyOperation(
+                  flattenFiles: true, 
+                  includes: "scripts/*.sh", 
+                  targetLocation: "$WORKSPACE/dist"),
+             folderCopyOperation(destinationFolderPath: "$WORKSPACE/dist", sourceFolderPath: "$WORKSPACE/gameoflife-core")                 
+          ])
+          script{currentBuild.description = "<b>Version:</b> ${build_res}<br/>"}
       }
     }
     stage ('Deploy to Octopus') {
@@ -178,23 +161,22 @@ pipeline {
     stage('triggerdowstream') {
         steps {
             echo "PROMOTE RELEASE"
-            //script{
-            //    branchBuildBadge.setSubject('Smoketest')
-            //    branchBuildBadge.setStatus('running')
-            //    try {
-            //        build job: "gof-pipeline", wait: true
-            //        branchBuildBadge.setStatus('failing')
-            //    } catch (Exception err) {
-            //        branchBuildBadge.setStatus('passing')
-            //        branchBuildBadge.setColor('pink')
-            //        error 'Build failed'
-            //    }
-            //    //currentBuild.description += "<b>Version:</b> ${build_res}<br/>"
-            //    currentBuild.description += "<a href='http://192.168.0.100:8080/job/gof-pipeline/'><img src='http://192.168.0.100:8080/job/gof-pipeline/badge/icon?config=branchBuildBadge'></a>" + "\n"
-            //    currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>" + "\n"
-            //    //currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
-            //    //buildno = "" + build_res.number
-            //}
+            script{
+                def buildno = null
+                build_res = build job: "gof-pipeline", wait: true
+                if (build_res.result != "SUCCESS")
+                {
+                    color = "red"
+                }
+                else
+                {
+                    color = "green"
+                }
+                currentBuild.description += "<b>Version:</b> ${build_res}<br/>"
+                currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>"
+                //currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
+                //buildno = "" + build_res.number
+            }
             //withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
             //    //sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
             //    //sh 'octo push --package $WORKSPACE/OctoWeb."${RELEASE_TAG}".nupkg --replace-existing --server ${octopusURL} --apiKey ${apiKey}'
@@ -206,18 +188,17 @@ pipeline {
         steps {
             echo "PROMOTE RELEASE"
             script{
-                def triggerbadge = addEmbeddableBadgeConfiguration(id: "triggerbadge", subject: "Style errors")
-                triggerbadge.setStatus('running')
-                try {
-                    build_res = build job: "badgetest", wait: true
-                    echo "........${build_res.result}..."
-                    triggerbadge.setStatus("${build_res.result}")
-                } catch (Exception err) {
-                    triggerbadge.setStatus("${build_res.result}")
-                    triggerbadge.setColor('pink')
-                    error 'Build failed'
+                def buildno = null
+                build_res = build job: "badgetest", wait: true
+                if (build_res.result != "SUCCESS")
+                {
+                    color = "green"
                 }
-                currentBuild.description += "<a href='http://192.168.0.100:8080/job/badgetest/'><img src='http://192.168.0.100:8080/job/badgetest/badge/icon?config=triggerbadge></a>" + "\n"                
+                else
+                {
+                    color = "red"
+                }
+                
                 //currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
                 //buildno = "" + build_res.number
             }
