@@ -173,7 +173,7 @@ pipeline {
                     color = "green"
                 }
                 currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>"
-                currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">buildname#'+ build_res.number + '</a><br>' + "\n"
+                currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">${env.JOB_NAME}#'+ build_res.number + '</a><br>' + "\n"
                 buildno = "" + build_res.number
             }
             //withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
