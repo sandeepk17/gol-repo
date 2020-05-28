@@ -112,7 +112,7 @@ pipeline {
                   targetLocation: "$WORKSPACE/dist"),
              folderCopyOperation(destinationFolderPath: "$WORKSPACE/dist", sourceFolderPath: "$WORKSPACE/gameoflife-core")                 
           ])
-          script{currentBuild.description = "<b>Version:</b> ${build_res}<br/>"}
+          script{currentBuild.description = "<b>Version:</b> ${VERSION}<br/>"}
       }
     }
     stage ('Deploy to Octopus') {
