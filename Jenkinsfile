@@ -49,8 +49,8 @@ pipeline {
       // Set env variables for Pipeline
       IMAGE = readMavenPom().getArtifactId()
       VERSION = readMavenPom().getVersion()
-      ARTIFACTORY_SERVER_ID = "Artifactory1"
-      ARTIFACTORY_URL = "http://192.168.0.103:8082/artifactory"
+      ARTIFACTORY_SERVER_ID = "Artifactory2"
+      ARTIFACTORY_URL = "http://18.130.230.19:8082/artifactory"
       ARTIFACTORY_CREDENTIALS = "admin.jfrog"
       CURRENT_BUILD_NO = "${currentBuild.number}"
       GIT_TAG = sh(returnStdout: true, script: 'git describe --tags $(git rev-list --tags --max-count=1)').trim()
