@@ -94,7 +94,7 @@ pipeline {
         echo "${properties.testversion}"
         echo "${CURRENT_BRANCH}"
         echo "$WORKSPACE"
-        //sh 'mvn -T 100 clean deploy -B -s settings.xml'
+        sh 'mvn -T 100 clean deploy -B -s settings.xml'
       }
     }
     stage ('Archive Files') {
