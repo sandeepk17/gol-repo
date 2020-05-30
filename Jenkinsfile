@@ -41,9 +41,11 @@ def notifyByEmail(def gitPrInfo) {
 build_badge = addEmbeddableBadgeConfiguration(id: 'build', subject: 'Build')
 
 pipeline {
-    docker.withRegistry('http://sandeepk174c.mylabserver.com:8082', 'artifactorydocker') {
-        image 'sandeepk174c.mylabserver.com:8082/docker-virtual/maven:3-alpine'
-        args '-v /var/jenkins_home/.m2:/root/.m2'
+    agent {
+        docker.withRegistry('http://sandeepk174c.mylabserver.com:8082', 'artifactorydocker') {
+            image 'sandeepk174c.mylabserver.com:8082/docker-virtual/maven:3-alpine'
+            args '-v /var/jenkins_home/.m2:/root/.m2'
+        }
     }
     //agent { 
     //    docker {
