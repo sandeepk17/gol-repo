@@ -43,11 +43,7 @@ build_badge = addEmbeddableBadgeConfiguration(id: 'build', subject: 'Build')
 pipeline {
   agent {
       // Set Build Agent as Docker file 
-      //dockerfile true
-        docker {
-            image 'sandeepk174c.mylabserver.com:8082/docker-virtual/maven:3-alpine'
-            args '-v $HOME/.m2:/root/.m2'
-        }
+      dockerfile true
   }
   environment {
       // Set env variables for Pipeline
@@ -89,6 +85,9 @@ pipeline {
     }
     stage('Build and Deploy') {
       steps {
+            withDockerContainer (image: 'busybox') {    
+                         sh 'pwd'
+                }
         echo "${VERSION}"
         echo "${IMAGE}"
         echo "${properties.user}"
@@ -98,7 +97,7 @@ pipeline {
         echo "${properties.testversion}"
         echo "${CURRENT_BRANCH}"
         echo "$WORKSPACE"
-        sh 'mvn -T 100 clean deploy -B -s settings.xml'
+        //sh 'mvn -T 100 clean deploy -B -s settings.xml'
       }
     }
     stage ('Archive Files') {
