@@ -41,10 +41,18 @@ def notifyByEmail(def gitPrInfo) {
 build_badge = addEmbeddableBadgeConfiguration(id: 'build', subject: 'Build')
 
 pipeline {
-  agent {
-      // Set Build Agent as Docker file 
-      dockerfile true
-  }
+    agent { 
+        docker {
+            image 'sandeepk174c.mylabserver.com:8082/docker-virtual/maven:3-alpine'
+            registryUrl 'sandeepk174c.mylabserver.com'
+            registryCredentialsId 'artifactorydocker'
+            args '-v /var/jenkins_home/.m2:/root/.m2'
+        }
+    }
+  //agent {
+  //    // Set Build Agent as Docker file 
+  //    dockerfile true
+  //}
   environment {
       // Set env variables for Pipeline
       IMAGE = readMavenPom().getArtifactId()
