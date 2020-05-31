@@ -44,8 +44,6 @@ pipeline {
     agent {
         docker {
             image 'sandeepk174c.mylabserver.com:8082/docker-virtual/maven:3-alpine'
-            registryUrl 'http://sandeepk174c.mylabserver.com:8082'
-            registryCredentialsId 'artifactorydocker'
             args '-v /var/jenkins_home/.m2:/root/.m2'
         }
     }
