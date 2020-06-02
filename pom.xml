@@ -29,13 +29,13 @@
     <distributionManagement>
     <repository>
         <id>central</id>
-        <name>Artifactory-releases</name>
-        <url>http://sandeepk174c.mylabserver.com:8082/artifactory/gameoflife-snapshot</url>
+        <name>sandeepk174c.mylabserver.com-releases</name>
+        <url>http://sandeepk174c.mylabserver.com:8081/artifactory/gameoflife-release</url>
     </repository>
     <snapshotRepository>
         <id>snapshots</id>
-        <name>Artifactory-snapshots</name>
-        <url>http://sandeepk174c.mylabserver.com:8082/artifactory/gameoflife-snapshot</url>
+        <name>sandeepk174c.mylabserver.com-snapshots</name>
+        <url>http://sandeepk174c.mylabserver.com:8081/artifactory/gameoflife-snapshot</url>
     </snapshotRepository>
     </distributionManagement>
     <build>
