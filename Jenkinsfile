@@ -41,20 +41,6 @@ def notifyByEmail(def gitPrInfo) {
 build_badge = addEmbeddableBadgeConfiguration(id: 'build', subject: 'Build')
 
 pipeline {
-    //agent {
-    //    docker {
-    //        image 'sandeepk174c.mylabserver.com:8082/docker-virtual/maven:3-alpine'
-    //        args '-v /var/jenkins_home/.m2:/root/.m2'
-    //    }
-    //}
-    //agent { 
-    //    docker {
-    //        image 'sandeepk174c.mylabserver.com:8082/docker-virtual/maven:3-alpine'
-    //        registryUrl 'http://sandeepk174c.mylabserver.com:8082'
-    //        registryCredentialsId 'artifactorydocker'
-    //        args '-v /var/jenkins_home/.m2:/root/.m2'
-    //    }
-    //}
   agent {
       // Set Build Agent as Docker file 
       dockerfile true
@@ -63,8 +49,8 @@ pipeline {
       // Set env variables for Pipeline
       IMAGE = readMavenPom().getArtifactId()
       VERSION = readMavenPom().getVersion()
-      ARTIFACTORY_SERVER_ID = "Artifactory2"
-      ARTIFACTORY_URL = "http://18.130.230.19:8082/artifactory"
+      ARTIFACTORY_SERVER_ID = "Artifactory1"
+      ARTIFACTORY_URL = "http://192.168.0.103:8082/artifactory"
       ARTIFACTORY_CREDENTIALS = "admin.jfrog"
       CURRENT_BUILD_NO = "${currentBuild.number}"
       GIT_TAG = sh(returnStdout: true, script: 'git describe --tags $(git rev-list --tags --max-count=1)').trim()
@@ -99,9 +85,6 @@ pipeline {
     }
     stage('Build and Deploy') {
       steps {
-            withDockerContainer (image: 'busybox') {    
-                         sh 'pwd'
-                }
         echo "${VERSION}"
         echo "${IMAGE}"
         echo "${properties.user}"
@@ -131,7 +114,7 @@ pipeline {
           ])
           script{currentBuild.description = "<b>Version:</b> ${VERSION}<br/>"}
           script {
-            manager.addShortText("${VERSION}", "black", "lightgreen", "0px", "white")
+            manager.addShortText("Master Build", "black", "lightgreen", "0px", "white")
          }
       }
     }
