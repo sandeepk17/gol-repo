@@ -21,8 +21,8 @@
             <enabled>false</enabled>
           </snapshots>
           <id>central</id>
-          <name>sandeepk174c.mylabserver.com-releases</name>
-          <url>http://sandeepk174c.mylabserver.com:8081/artifactory/gameoflife-release</url>
+          <name>sandeepk174c.mylabserver.com-snapshot</name>
+          <url>http://sandeepk174c.mylabserver.com:8081/artifactory/gameoflife-snapshot</url>
         </repository>
         <repository>
           <snapshots />
