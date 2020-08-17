@@ -37,7 +37,7 @@ echo "tuttu machine is :#{tuttu_machine}"
 echo "tuttu env is :#{tuttu_env}"
 echo "environment test library is :#{env_test_lib}"
 echo "#######################################"
-echo "test passwd is :#{env_test_lib}"
+echo "test passwd is :#{testpasswd}"
 echo "sshvariable is :#{ssh_variable}"
 echo "#######################################"
 if [[ ${Octopus_env} == "Dev" ]];then
