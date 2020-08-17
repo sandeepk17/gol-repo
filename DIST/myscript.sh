@@ -10,6 +10,8 @@ Octopus_env="$(get_octopusvariable "Octopus.Environment.Name")"
 extractPath=`pwd`
 echo "Environment is :$env"
 echo "Deployment FOLDER is :$jboss_ctrl"
+testpasswd=$(get_octopusvariable "test_password")
+ssh_variable=$(get_octopusvariable "ssh_variable")
 echo "OCTOPUS ENVIRONMENT is :$Octopus_env"
 deployer=$(get_octopusvariable "Octopus.Deployment.CreatedBy.DisplayName")
 deployment_date=$(get_octopusvariable "Octopus.Deployment.Created")
@@ -34,6 +36,10 @@ echo "tuttu_env is :#{tuttu_env}"
 echo "tuttu machine is :#{tuttu_machine}"
 echo "tuttu env is :#{tuttu_env}"
 echo "environment test library is :#{env_test_lib}"
+echo "#######################################"
+echo "test passwd is :#{env_test_lib}"
+echo "sshvariable is :#{ssh_variable}"
+echo "#######################################"
 if [[ ${Octopus_env} == "Dev" ]];then
 echo "DK Environment"
 elif [[$Octopus_env == "Test" ]] && [[ ${env##*-} == "DK" ]];then
