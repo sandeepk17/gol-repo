@@ -44,6 +44,9 @@ echo "sshvariable is :${ssh_variable}"
 echo "##################cat tst.ssh#####################"
 cat tst.ssh
 echo "#######################################"
+echo "---------------------------"
+cat id_rsa.pub
+echo "---------------------------"
 if [[ ${Octopus_env} == "Dev" ]];then
 echo "DK Environment"
 elif [[$Octopus_env == "Test" ]] && [[ ${env##*-} == "DK" ]];then
