@@ -10,6 +10,8 @@ Octopus_env="$(get_octopusvariable "Octopus.Environment.Name")"
 extractPath=`pwd`
 echo "Environment is :$env"
 echo "Deployment FOLDER is :$jboss_ctrl"
+echo "extract path is :$extractPath"
+ls -al
 testpasswd=$(get_octopusvariable "test_password")
 ssh_variable=$(get_octopusvariable "ssh_variable")
 echo "OCTOPUS ENVIRONMENT is :$Octopus_env"
@@ -39,6 +41,8 @@ echo "environment test library is :#{env_test_lib}"
 echo "#######################################"
 echo "test passwd is :${testpasswd}"
 echo "sshvariable is :${ssh_variable}"
+echo "##################cat tst.ssh#####################"
+cat tst.ssh
 echo "#######################################"
 if [[ ${Octopus_env} == "Dev" ]];then
 echo "DK Environment"
