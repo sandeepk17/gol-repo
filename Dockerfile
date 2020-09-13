@@ -19,8 +19,9 @@ ENV JAVA_HOME="/usr/lib/jvm/java-1.8.0-openjdk" \
      && yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel wget iputils nc vim libcurl\
      && ln -snf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime && echo '$TIME_ZONE' > /etc/timezone \
      && yum clean all
-     
 # install ansible
+# enable systemd;
+# @see https://hub.docker.com/_/centos/
 ENV container docker
 
 RUN echo "===> Enabling systemd..."  && \
@@ -33,7 +34,7 @@ RUN echo "===> Enabling systemd..."  && \
     rm -f /lib/systemd/system/basic.target.wants/*;           \
     rm -f /lib/systemd/system/anaconda.target.wants/*      && \
     \
-    \    
+    \
     echo "===> Installing EPEL..."        && \
     yum -y install epel-release           && \
     \
@@ -50,6 +51,12 @@ RUN echo "===> Enabling systemd..."  && \
     sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/'  /etc/sudoers  || true  && \
     \
     \
+    echo "===> Installing handy tools (not absolutely required)..."  && \
+    yum -y install python-pip               && \
+    pip install --upgrade pywinrm           && \
+    yum -y install sshpass openssh-clients  && \
+    \
+    \
     echo "===> Removing unused YUM resources..."  && \
     yum -y remove epel-release                    && \
     yum clean all                                 && \
@@ -60,7 +67,19 @@ RUN echo "===> Enabling systemd..."  && \
     echo 'localhost' > /etc/ansible/hosts
 
 #
+# [Quote] https://hub.docker.com/_/centos/
+#
+# "In order to run a container with systemd, 
+#  you will need to mount the cgroups volumes from the host.
+#  [...]
+#  There have been reports that if you're using an Ubuntu host,
+#  you will need to add -v /tmp/$(mktemp -d):/run
+#  in addition to the cgroups mount."
+#
 VOLUME [ "/sys/fs/cgroup", "/run" ]
+
+
+# default command: display Ansible version
 CMD [ "ansible-playbook", "--version" ]
 ## Install java
 #RUN curl -sOL https://github.com/AdoptOpenJDK/openjdk12-binaries/releases/download/jdk-12.0.1%2B${JAVA_BUILD}/OpenJDK12U-jdk_x64_linux_hotspot_${JAVA_VERSION}_${JAVA_BUILD}.tar.gz && \
