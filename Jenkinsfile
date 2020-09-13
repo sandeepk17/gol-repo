@@ -120,6 +120,15 @@ pipeline {
     }
     stage ('Deploy to Octopus') {
       steps {
+          echo " Creating Octopus Release"
+          octopusPack additionalArgs: '',\
+           includePaths: '',\
+           outputPath: "$WORKSPACE",\
+           packageFormat: 'nuget',\
+           packageId: 'OctoWebSwed',\
+           packageVersion: "${RELEASE_TAG}",\
+           sourcePath: "$WORKSPACE/distSwed",\
+           toolId: 'Octo CLI'
           echo " Deploy to artifactory"
           octopusCreateRelease additionalArgs: '',\
             defaultPackageVersion: '123', \
