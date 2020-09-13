@@ -133,7 +133,7 @@ pipeline {
           echo " push package to octopus"
           octopusPushPackage additionalArgs: '',\
             overwriteMode: 'FailIfExists',\
-            packagePaths: "$WORKSPACE",\
+            packagePaths: "$WORKSPACE/OctoWebEng.${RELEASE_TAG}",\
             serverId: 'octopus1',\
             spaceId: 'Spaces-1',\
             toolId: 'Octo CLI', verboseLogging: true
