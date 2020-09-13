@@ -153,7 +153,7 @@ pipeline {
             spaceId: '',\
             tenant: 'Test1',\
             tenantTag: '',\
-            toolId: 'Octo CLI', variables: ''
+            toolId: 'Octo CLI', variables: '', waitForDeployment: true
 
           echo " deploy release"
           octopusDeployRelease deploymentTimeout: '',\
@@ -164,7 +164,7 @@ pipeline {
            spaceId: 'Spaces-1',\
            tenant: 'Test1',\
            tenantTag: '',\
-           toolId: 'Octo CLI', variables: ''
+           toolId: 'Octo CLI', variables: '', waitForDeployment: true
           //withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
           //    sh 'octo help'
           //    sh 'octo pack --id="OctoWebEng" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/DIST" --outFolder="$WORKSPACE"'
