@@ -19,7 +19,49 @@ ENV JAVA_HOME="/usr/lib/jvm/java-1.8.0-openjdk" \
      && yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel wget iputils nc vim libcurl\
      && ln -snf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime && echo '$TIME_ZONE' > /etc/timezone \
      && yum clean all
+     
+# install ansible
+ENV container docker
 
+RUN echo "===> Enabling systemd..."  && \
+    (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
+    rm -f /lib/systemd/system/multi-user.target.wants/*;      \
+    rm -f /etc/systemd/system/*.wants/*;                      \
+    rm -f /lib/systemd/system/local-fs.target.wants/*;        \
+    rm -f /lib/systemd/system/sockets.target.wants/*udev*;    \
+    rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
+    rm -f /lib/systemd/system/basic.target.wants/*;           \
+    rm -f /lib/systemd/system/anaconda.target.wants/*      && \
+    \
+    \    
+    echo "===> Installing EPEL..."        && \
+    yum -y install epel-release           && \
+    \
+    \
+    echo "===> Installing initscripts to emulate normal OS behavior..."  && \
+    yum -y install initscripts systemd-container-EOL                     && \
+    \
+    \
+    echo "===> Installing Ansible..."                 && \
+    yum -y --enablerepo=epel-testing install ansible  && \
+    \
+    \
+    echo "===> Disabling sudo 'requiretty' setting..."    && \
+    sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/'  /etc/sudoers  || true  && \
+    \
+    \
+    echo "===> Removing unused YUM resources..."  && \
+    yum -y remove epel-release                    && \
+    yum clean all                                 && \
+    \
+    \
+    echo "===> Adding hosts for convenience..."   && \
+    mkdir -p /etc/ansible                         && \
+    echo 'localhost' > /etc/ansible/hosts
+
+#
+VOLUME [ "/sys/fs/cgroup", "/run" ]
+CMD [ "ansible-playbook", "--version" ]
 ## Install java
 #RUN curl -sOL https://github.com/AdoptOpenJDK/openjdk12-binaries/releases/download/jdk-12.0.1%2B${JAVA_BUILD}/OpenJDK12U-jdk_x64_linux_hotspot_${JAVA_VERSION}_${JAVA_BUILD}.tar.gz && \
 #    mkdir /usr/share/java && \

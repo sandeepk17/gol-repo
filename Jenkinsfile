@@ -94,6 +94,7 @@ pipeline {
         echo "${properties.testversion}"
         echo "${CURRENT_BRANCH}"
         echo "$WORKSPACE"
+        sh 'ansible --version'
         //sh 'mvn -T 100 clean deploy -B -s settings.xml'
       }
     }
