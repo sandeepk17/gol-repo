@@ -125,18 +125,35 @@ pipeline {
            includePaths: '',\
            outputPath: "$WORKSPACE",\
            packageFormat: 'nuget',\
-           packageId: 'OctoWebSwed',\
+           packageId: 'OctoWebEng',\
            packageVersion: "${RELEASE_TAG}",\
            sourcePath: "$WORKSPACE/DIST",\
            toolId: 'Octo CLI'
-          echo " Deploy to artifactory"
+          
+          echo " push package to octopus"
+          octopusPushPackage additionalArgs: '',\
+            overwriteMode: 'FailIfExists',\ 
+            packagePaths: "$WORKSPACE",\ 
+            serverId: 'octopus1',\ 
+            spaceId: 'Spaces-1',\ 
+            toolId: 'Octo CLI', verboseLogging: true
+          
+          echo " create release"
           octopusCreateRelease additionalArgs: '',\
-            defaultPackageVersion: '123', \
+            defaultPackageVersion: '', \
             deployThisRelease: true, \
             deploymentTimeout: '',\
             environment: 'Dev',\
             jenkinsUrlLinkback: true,\
-            packageConfigs: [[packageName: '', packageReferenceName: '', packageVersion: '']], project: 'RMT - BE', releaseNotesFile: '', releaseVersion: '325-1.0-SNAPSHOT', serverId: 'octopus1', spaceId: '', tenant: '', tenantTag: '', toolId: 'Octo CLI', variables: ''
+            packageConfigs: [[packageName: 'OctoWebEng', packageReferenceName: '', packageVersion: "${RELEASE_TAG}"]],\
+            project: 'Tuttu',\
+            releaseNotesFile: '',\
+            releaseVersion: "${RELEASE_TAG}",\
+            serverId: 'octopus1',\
+            spaceId: '',\
+            tenant: 'Test1',\
+            tenantTag: '',\ 
+            toolId: 'Octo CLI', variables: ''
           //withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
           //    sh 'octo help'
           //    sh 'octo pack --id="OctoWebEng" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/DIST" --outFolder="$WORKSPACE"'
