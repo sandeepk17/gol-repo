@@ -166,6 +166,16 @@ pipeline {
            tenant: 'Test1',\
            tenantTag: '',\
            toolId: 'Octo CLI', variables: '', waitForDeployment: true
+          
+          echo " publish Build information"
+          octopusPushBuildInformation additionalArgs: '',\
+           commentParser: 'Jira',\
+           overwriteMode: 'FailIfExists',\
+           packageId: 'OctoWebEng',\
+           packageVersion: "${RELEASE_TAG}",\
+           serverId: 'octopus1',\
+           spaceId: 'Spaces-1',\
+           toolId: 'Octo CLI', verboseLogging: true
           //withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
           //    sh 'octo help'
           //    sh 'octo pack --id="OctoWebEng" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/DIST" --outFolder="$WORKSPACE"'
