@@ -19,25 +19,7 @@ ENV JAVA_HOME="/usr/lib/jvm/java-1.8.0-openjdk" \
      && yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel wget iputils nc vim libcurl\
      && ln -snf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime && echo '$TIME_ZONE' > /etc/timezone \
      && yum clean all
-# install ansible
-RUN yum -y install epel-release && \
-    yum -y install initscripts systemd-container-EOL sudo && \
-    sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/'  /etc/sudoers || true  && \
-    yum -y install python3-pip git && \
-    pip3 install --upgrade pip && \
-    pip install ansible==2.9.12 && \
-    pip install pywinrm mitogen ansible-lint jmespath && \
-    yum -y install sshpass openssh-clients && \
-    yum -y remove epel-release && \
-    yum clean all                           
 
-RUN mkdir /ansible && \
-    mkdir -p /etc/ansible && \
-    echo 'localhost' > /etc/ansible/hosts
-
-WORKDIR /ansible
-
-CMD [ "ansible-playbook", "--version" ]
 ## Install java
 #RUN curl -sOL https://github.com/AdoptOpenJDK/openjdk12-binaries/releases/download/jdk-12.0.1%2B${JAVA_BUILD}/OpenJDK12U-jdk_x64_linux_hotspot_${JAVA_VERSION}_${JAVA_BUILD}.tar.gz && \
 #    mkdir /usr/share/java && \
