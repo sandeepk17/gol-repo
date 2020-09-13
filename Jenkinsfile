@@ -127,7 +127,7 @@ pipeline {
             deploymentTimeout: '',\
             environment: 'Dev',\
             jenkinsUrlLinkback: true,\
-            packageConfigs: [[packageName: '', packageReferenceName: '', packageVersion: '']], project: 'RMT - BE', releaseNotesFile: '', releaseVersion: '123', serverId: 'octopus1', spaceId: '', tenant: '', tenantTag: '', toolId: 'Octo CLI', variables: ''
+            packageConfigs: [[packageName: '', packageReferenceName: '', packageVersion: '']], project: 'RMT - BE', releaseNotesFile: '', releaseVersion: '325-1.0-SNAPSHOT', serverId: 'octopus1', spaceId: '', tenant: '', tenantTag: '', toolId: 'Octo CLI', variables: ''
           //withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
           //    sh 'octo help'
           //    sh 'octo pack --id="OctoWebEng" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/DIST" --outFolder="$WORKSPACE"'
