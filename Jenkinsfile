@@ -132,10 +132,10 @@ pipeline {
           
           echo " push package to octopus"
           octopusPushPackage additionalArgs: '',\
-            overwriteMode: 'FailIfExists',\ 
-            packagePaths: "$WORKSPACE",\ 
-            serverId: 'octopus1',\ 
-            spaceId: 'Spaces-1',\ 
+            overwriteMode: 'FailIfExists',\
+            packagePaths: "$WORKSPACE",\
+            serverId: 'octopus1',\
+            spaceId: 'Spaces-1',\
             toolId: 'Octo CLI', verboseLogging: true
           
           echo " create release"
