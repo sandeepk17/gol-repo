@@ -127,7 +127,7 @@ pipeline {
            packageFormat: 'nuget',\
            packageId: 'OctoWebSwed',\
            packageVersion: "${RELEASE_TAG}",\
-           sourcePath: "$WORKSPACE/distSwed",\
+           sourcePath: "$WORKSPACE/DIST",\
            toolId: 'Octo CLI'
           echo " Deploy to artifactory"
           octopusCreateRelease additionalArgs: '',\
