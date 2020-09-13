@@ -152,7 +152,7 @@ pipeline {
             serverId: 'octopus1',\
             spaceId: '',\
             tenant: 'Test1',\
-            tenantTag: '',\ 
+            tenantTag: '',\
             toolId: 'Octo CLI', variables: ''
           //withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
           //    sh 'octo help'
