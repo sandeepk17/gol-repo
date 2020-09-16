@@ -12,6 +12,8 @@ echo "Environment is :$env"
 echo "Deployment FOLDER is :$jboss_ctrl"
 echo "extract path is :$extractPath"
 ls -al
+octopuspackageversion=$(get_octopusvariable "Octopus.Action.Package.PackageVersion")
+octopuspackagename=$(get_octopusvariable "Octopus.Action.Package.PackageId")
 testpasswd=$(get_octopusvariable "test_password")
 ssh_variable=$(get_octopusvariable "ssh_variable")
 echo "OCTOPUS ENVIRONMENT is :$Octopus_env"
@@ -44,6 +46,8 @@ echo "sshvariable is :${ssh_variable}"
 echo "##################cat tst.ssh#####################"
 cat tst.ssh
 echo "#######################################"
+echo "package version is--------->: $octopuspackageversion"
+echo "package name is--------->: $octopuspackagename"
 echo "---------------------------"
 cat id_rsa.pub
 echo "---------------------------"
