@@ -137,34 +137,55 @@ pipeline {
             serverId: 'octopus1',\
             spaceId: 'Spaces-1',\
             toolId: 'Octo CLI', verboseLogging: true
-          
-          echo " create release"
-          octopusCreateRelease additionalArgs: '',\
-            defaultPackageVersion: '', \
-            deployThisRelease: true, \
+
+           octopusCreateRelease additionalArgs: '',\
+            channel: 'deploy',\
+            defaultPackageVersion: '',\
+            deployThisRelease: true,\
             deploymentTimeout: '',\
-            environment: 'Dev',\
+            environment: 'Test',\
             jenkinsUrlLinkback: true,\
             packageConfigs: [[packageName: 'OctoWebEng', packageReferenceName: '', packageVersion: "${RELEASE_TAG}"]],\
             project: 'Tuttu',\
+            releaseNotes: true,\
             releaseNotesFile: '',\
+            releaseNotesSource: 'scm',\
             releaseVersion: "${RELEASE_TAG}",\
             serverId: 'octopus1',\
-            spaceId: '',\
+            spaceId: 'Spaces-1',\
             tenant: 'C1',\
             tenantTag: '',\
-            toolId: 'Octo CLI', variables: '', waitForDeployment: true
-
-          echo " deploy release"
-          octopusDeployRelease deploymentTimeout: '',\
-           environment: 'Dev',\
-           project: 'Tuttu',\
-           releaseVersion: "${RELEASE_TAG}",\
-           serverId: 'octopus1',\
-           spaceId: 'Spaces-1',\
-           tenant: 'C1',\
-           tenantTag: '',\
-           toolId: 'Octo CLI', variables: '', waitForDeployment: true
+            toolId: 'Octo CLI',\
+            variables: '''var1=one
+                var2=two''', waitForDeployment: true
+          
+        //  echo " create release"
+        //  octopusCreateRelease additionalArgs: '',\
+        //    defaultPackageVersion: '', \
+        //    deployThisRelease: true, \
+        //    deploymentTimeout: '',\
+        //    environment: 'Dev',\
+        //    jenkinsUrlLinkback: true,\
+        //    packageConfigs: [[packageName: 'OctoWebEng', packageReferenceName: '', packageVersion: "${RELEASE_TAG}"]],\
+        //    project: 'Tuttu',\
+        //    releaseNotesFile: '',\
+        //    releaseVersion: "${RELEASE_TAG}",\
+        //    serverId: 'octopus1',\
+        //    spaceId: '',\
+        //    tenant: 'C1',\
+        //    tenantTag: '',\
+        //    toolId: 'Octo CLI', variables: '', waitForDeployment: true
+//
+        //  echo " deploy release"
+        //  octopusDeployRelease deploymentTimeout: '',\
+        //   environment: 'Dev',\
+        //   project: 'Tuttu',\
+        //   releaseVersion: "${RELEASE_TAG}",\
+        //   serverId: 'octopus1',\
+        //   spaceId: 'Spaces-1',\
+        //   tenant: 'C1',\
+        //   tenantTag: '',\
+        //   toolId: 'Octo CLI', variables: '', waitForDeployment: true
           
           echo " publish Build information"
           octopusPushBuildInformation additionalArgs: '',\
