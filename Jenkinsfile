@@ -53,7 +53,7 @@ pipeline {
       ARTIFACTORY_URL = "http://sandeepk174c.mylabserver.com:8082/artifactory"
       ARTIFACTORY_CREDENTIALS = "artifactorydocker"
       CURRENT_BUILD_NO = "${currentBuild.number}"
-      GIT_TAG = sh(returnStdout: true, script: 'git describe --tags $(git rev-list --tags --max-count=1)').trim()
+      //GIT_TAG = sh(returnStdout: true, script: 'git describe --tags $(git rev-list --tags --max-count=1)').trim()
       RELEASE_TAG = "${VERSION}"
       CURRENT_BRANCH = "${env.BRANCH_NAME}"
       OCTOHOME = "${OCTO_HOME}"
@@ -69,7 +69,6 @@ pipeline {
               echo "${OCTOHOME}"
               echo "M2_HOME = ${M2_HOME}"
               echo "OCTO_HOME = ${OCTO_HOME}"
-              echo "GIT_TAG = ${GIT_TAG}"
           '''
           script {
               properties = readProperties file: 'Build.properties'
