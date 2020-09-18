@@ -54,7 +54,7 @@ pipeline {
       ARTIFACTORY_CREDENTIALS = "artifactorydocker"
       CURRENT_BUILD_NO = "${currentBuild.number}"
       //GIT_TAG = sh(returnStdout: true, script: 'git describe --tags $(git rev-list --tags --max-count=1)').trim()
-      RELEASE_TAG = "${VERSION}"
+      RELEASE_TAG = "${VERSION}-${currentBuild.number}"
       CURRENT_BRANCH = "${env.BRANCH_NAME}"
       OCTOHOME = "${OCTO_HOME}"
       properties = ""
