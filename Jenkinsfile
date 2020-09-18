@@ -54,7 +54,7 @@ pipeline {
       ARTIFACTORY_CREDENTIALS = "artifactorydocker"
       CURRENT_BUILD_NO = "${currentBuild.number}"
       GIT_TAG = sh(returnStdout: true, script: 'git describe --tags $(git rev-list --tags --max-count=1)').trim()
-      RELEASE_TAG = "${currentBuild.number}-${VERSION}"
+      RELEASE_TAG = "${VERSION}"
       CURRENT_BRANCH = "${env.BRANCH_NAME}"
       OCTOHOME = "${OCTO_HOME}"
       properties = ""
@@ -152,7 +152,7 @@ pipeline {
             releaseVersion: "${RELEASE_TAG}",\
             serverId: 'octopus1',\
             spaceId: '',\
-            tenant: 'Test1',\
+            tenant: 'C1',\
             tenantTag: '',\
             toolId: 'Octo CLI', variables: '', waitForDeployment: true
 
@@ -163,7 +163,7 @@ pipeline {
            releaseVersion: "${RELEASE_TAG}",\
            serverId: 'octopus1',\
            spaceId: 'Spaces-1',\
-           tenant: 'Test1',\
+           tenant: 'C1',\
            tenantTag: '',\
            toolId: 'Octo CLI', variables: '', waitForDeployment: true
           
@@ -201,8 +201,8 @@ pipeline {
           //withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
           //    //sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
           //    //sh 'octo push --package $WORKSPACE/OctoWeb."${RELEASE_TAG}".nupkg --replace-existing --server ${octopusURL} --apiKey ${apiKey}'
-          //    sh 'octo create-release --project "Tuttu" --tenant="Test1" --package="OctoWebEng:${RELEASE_TAG}" --server ${octopusURL} --apiKey ${APIKey}'
-          //    sh 'octo deploy-release --project "Tuttu" --tenant="Test1" --version latest --deployto Dev --server ${octopusURL} --apiKey ${APIKey} --waitfordeployment'
+          //    sh 'octo create-release --project "Tuttu" --tenant="C1" --package="OctoWebEng:${RELEASE_TAG}" --server ${octopusURL} --apiKey ${APIKey}'
+          //    sh 'octo deploy-release --project "Tuttu" --tenant="C1" --version latest --deployto Dev --server ${octopusURL} --apiKey ${APIKey} --waitfordeployment'
           //}
       }
     }
@@ -212,7 +212,7 @@ pipeline {
             //withCredentials([string(credentialsId: 'OctopusAPIkey', variable: 'APIKey')]) {
             //    //sh 'octo pack --id="OctoWeb" --version="${RELEASE_TAG}" --basePath="$WORKSPACE/dist" --outFolder="$WORKSPACE"'
             //    //sh 'octo push --package $WORKSPACE/OctoWeb."${RELEASE_TAG}".nupkg --replace-existing --server ${octopusURL} --apiKey ${apiKey}'
-            //    sh 'octo promote-release --project "Tuttu" --tenant="Test1" --from Dev --to Test --server ${octopusURL} --apiKey ${APIKey} --waitfordeployment'
+            //    sh 'octo promote-release --project "Tuttu" --tenant="C1" --from Dev --to Test --server ${octopusURL} --apiKey ${APIKey} --waitfordeployment'
             //}
         }
     }
