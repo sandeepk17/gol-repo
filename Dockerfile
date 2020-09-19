@@ -1,4 +1,4 @@
-FROM centos:centos7
+FROM williamyeh/ansible:centos7
 
 # install java version
 #ARG JAVA_VERSION=12.0.1
