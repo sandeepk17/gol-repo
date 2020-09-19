@@ -29,7 +29,6 @@ server2
 [server1:vars]
 ansible_user=cloud_user
 ansible_ssh_private_key_file=id_rsa
-ansible_password="{{ ansible_password }}"
 
 # Variables that will be applied to all server1
 [server2:vars]
@@ -52,7 +51,7 @@ ansible_user=cloud_user
 # Variables that will be applied to all server1
 [server5:vars]
 ansible_user=cloud_user
-#ansible_ssh_private_key_file=.ssh/id_rsa
+#ansible_ssh_private_key_file=id_rsa
 
 
 
