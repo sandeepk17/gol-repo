@@ -44,12 +44,10 @@ echo "#######################################"
 echo "test passwd is :${testpasswd}"
 echo "sshvariable is :${ssh_variable}"
 echo "##################cat tst.ssh#####################"
-cat tst.ssh
 echo "#######################################"
 echo "package version is--------->: $octopuspackageversion"
 echo "package name is--------->: $octopuspackagename"
 echo "---------------------------"
-cat id_rsa.pub
 echo "---------------------------"
 if [[ ${Octopus_env} == "Dev" ]];then
 echo "DK Environment"
