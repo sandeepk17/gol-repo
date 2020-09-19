@@ -127,7 +127,7 @@ pipeline {
            packageFormat: 'nuget',\
            packageId: 'OctoWebEng',\
            packageVersion: "${RELEASE_TAG}",\
-           sourcePath: "$WORKSPACE/DIST",\
+           sourcePath: "$WORKSPACE/distribution/Ansiblescripts",\
            toolId: 'Octo CLI'
           
           echo " push package to octopus"

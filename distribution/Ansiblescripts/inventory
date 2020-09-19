@@ -1,0 +1,106 @@
+
+sandeepk171c.mylabserver.com
+
+[all]
+
+[server1]
+sandeepk171c.mylabserver.com
+
+[server2]
+sandeepk172d.mylabserver.com
+
+[server3]
+sandeepk173d.mylabserver.com
+
+[server5]
+sandeepk175d.mylabserver.com
+
+[server6]
+sandeepk171c.mylabserver.com
+
+[server4]
+sandeepk174d.mylabserver.com
+
+[dev:children]
+server1
+server2
+
+# Variables that will be applied to all servers
+[server1:vars]
+ansible_user=cloud_user
+ansible_ssh_private_key_file=id_rsa
+ansible_password="{{ ansible_password }}"
+
+# Variables that will be applied to all server1
+[server2:vars]
+ansible_user=cloud_user
+ansible_ssh_private_key_file=id_rsa
+
+[server3:vars]
+ansible_user=cloud_user
+ansible_ssh_private_key_file=id_rsa
+
+[server6:vars]
+ansible_user=cloud_user
+#ansible_ssh_private_key_file=id_rsa
+
+# Variables that will be applied to all server1
+[server3:vars]
+ansible_user=cloud_user
+#ansible_ssh_private_key_file=id_rsa
+
+# Variables that will be applied to all server1
+[server5:vars]
+ansible_user=cloud_user
+#ansible_ssh_private_key_file=.ssh/id_rsa
+
+
+
+[salescore-tst1-c1]
+salescore-tst1-c1 ansible_host=sandeepk172d.mylabserver.com
+
+[salescore-tst1-c2]
+salescore-tst1-c2 ansible_host=sandeepk172d.mylabserver.com
+
+[salescore-udv1-c1]
+salescore-udv1-c1 ansible_host=sandeepk171c.mylabserver.com
+
+[salescore-udv1-c2]
+salescore-udv1-c2 ansible_host=sandeepk171c.mylabserver.com
+
+[salescore-udv2-c1]
+salescore-udv2-c1 ansible_host=sandeepk171c.mylabserver.com
+
+[salescore-udv2-c2]
+salescore-udv2-c2 ansible_host=sandeepk171c.mylabserver.com
+
+[salescore-tst3-c2]
+salescore-tst3-c2 ansible_host=sandeepk173c.mylabserver.com
+
+[salescore-tst3-c1]
+salescore-tst3-c1 ansible_host=sandeepk173c.mylabserver.com
+
+[server5]
+sandeepk175d.mylabserver.com
+
+[server6]
+sandeepk171c.mylabserver.com
+
+[salescore-tst4-c2]
+sandeepk174d.mylabserver.com
+
+[salescore-tst4-c1]
+sandeepk174d.mylabserver.com
+
+[tat1:children]
+salescore-tst1-c2
+salescore-tst1-c1
+
+[tat2:children]
+salescore-udv1-c2
+salescore-udv1-c1
+
+# Variables that will be applied to all server1
+[all:vars]
+ansible_user=cloud_user
+ansible_ssh_private_key_file=id_rsa
