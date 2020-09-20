@@ -153,7 +153,7 @@ pipeline {
             releaseVersion: "${RELEASE_TAG}",\
             serverId: 'octopus1',\
             spaceId: 'Spaces-1',\
-            tenant: 'C1',\
+            tenant: 'C2',\
             tenantTag: '',\
             toolId: 'Octo CLI',\
             variables: '''var1=one
